@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cache Immediate handler"
+  short_description: "Add generated caching around handlers"
+  default_prompt: "Use $immediate-cache:cache-handler to add generated caching around handlers."

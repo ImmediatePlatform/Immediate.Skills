@@ -1,0 +1,23 @@
+{
+  "name": "immediate-apis",
+  "version": "0.1.0",
+  "description": "Focused workflows for exposing Immediate.Handlers through Immediate.Apis.",
+  "author": {
+    "name": "ImmediatePlatform",
+    "url": "https://github.com/ImmediatePlatform"
+  },
+  "homepage": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "repository": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "license": "MIT",
+  "keywords": ["dotnet", "immediate-apis", "minimal-api", "agent-skills"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Immediate.Apis",
+    "shortDescription": "Build generated ASP.NET Core endpoints.",
+    "longDescription": "Create, group, customize, and describe Immediate.Apis endpoints generated from Immediate.Handlers.",
+    "developerName": "ImmediatePlatform",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "defaultPrompt": "Help me expose this handler with Immediate.Apis."
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Configure Immediate host slices"
+  short_description: "Coordinate tagged multi-host registration"
+  default_prompt: "Use $immediate-platform:configure-host-slices to coordinate tagged multi-host registration."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Configure handler registration"
+  short_description: "Configure handler lifetimes, subsets, and tags"
+  default_prompt: "Use $immediate-handlers:configure-registration to configure handler lifetimes, subsets, and tags."

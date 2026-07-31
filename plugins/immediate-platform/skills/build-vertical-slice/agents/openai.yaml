@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Immediate vertical slice"
+  short_description: "Build complete Immediate vertical slices"
+  default_prompt: "Use $immediate-platform:build-vertical-slice to build complete Immediate vertical slices."

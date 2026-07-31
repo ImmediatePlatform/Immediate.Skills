@@ -1,0 +1,212 @@
+{
+  "immediate-handlers:create-handler": {
+    "direct": "Use $immediate-handlers:create-handler to add a query handler that loads an order by ID.",
+    "indirect": "Add a CQRS request and generated handler for looking up an order.",
+    "incomplete": "I need a new command handler.",
+    "negative": "Expose my existing order handler at GET /orders/{id}.",
+    "edge": "Convert this static handler to a sealed partial class with constructor-injected dependencies."
+  },
+  "immediate-handlers:create-behavior": {
+    "direct": "Use $immediate-handlers:create-behavior to add transaction behavior around commands.",
+    "indirect": "Run one cross-cutting step around only handlers whose requests implement ICommand.",
+    "incomplete": "Add a handler pipeline step.",
+    "negative": "Add validation attributes to this command's properties.",
+    "edge": "Make this behavior outermost and explain why the handler-level list replaced assembly behaviors."
+  },
+  "immediate-handlers:create-streaming-handler": {
+    "direct": "Use $immediate-handlers:create-streaming-handler for an async stream of audit events.",
+    "indirect": "Return records incrementally through an IAsyncEnumerable handler.",
+    "incomplete": "I need a streaming query.",
+    "negative": "Return an ordinary list from this query handler.",
+    "edge": "Create a streaming handler that preserves cancellation through EnumeratorCancellation."
+  },
+  "immediate-handlers:configure-registration": {
+    "direct": "Use $immediate-handlers:configure-registration to register only billing handlers.",
+    "indirect": "Keep handlers from the admin slice out of this worker host.",
+    "incomplete": "Filter handler registration.",
+    "negative": "Create the HandleAsync method for this request.",
+    "edge": "Register one handler with a custom lifetime without broadening the assembly tag filter."
+  },
+  "immediate-apis:create-endpoint": {
+    "direct": "Use $immediate-apis:create-endpoint to expose GetOrder at GET /orders/{id}.",
+    "indirect": "Map this existing handler as a minimal API route with header and route binding.",
+    "incomplete": "Give this handler an HTTP endpoint.",
+    "negative": "Create the query handler that loads an order from EF Core.",
+    "edge": "Map two routes to this handler and return 201 with a Location header."
+  },
+  "immediate-apis:customize-endpoint": {
+    "direct": "Use $immediate-apis:customize-endpoint to add metadata and a response transformation.",
+    "indirect": "Add endpoint conventions that cannot be expressed by the mapping attributes alone.",
+    "incomplete": "Customize this generated endpoint.",
+    "negative": "Put all order endpoints under a shared /api/orders prefix.",
+    "edge": "Combine CustomizeEndpoint with TransformResult without changing request binding."
+  },
+  "immediate-apis:create-route-group": {
+    "direct": "Use $immediate-apis:create-route-group for versioned order endpoints.",
+    "indirect": "Share a nested route prefix, authorization policy, and tags across these endpoints.",
+    "incomplete": "Group these API routes.",
+    "negative": "Add response metadata to this single endpoint.",
+    "edge": "Create nested groups with generated route constants and tag-filtered mapping."
+  },
+  "immediate-apis:configure-openapi": {
+    "direct": "Use $immediate-apis:configure-openapi to fix nested request schema collisions.",
+    "indirect": "Swagger gives two generated endpoint models the same schema ID.",
+    "incomplete": "Fix these duplicate OpenAPI schema IDs.",
+    "negative": "Map this handler to a POST endpoint.",
+    "edge": "Configure unique schema IDs for both Swashbuckle and Microsoft OpenAPI conventions."
+  },
+  "immediate-validations:validate-request": {
+    "direct": "Use $immediate-validations:validate-request to validate CreateInvoice.",
+    "indirect": "Generate property checks for this request and every indexed line item.",
+    "incomplete": "Validate this command.",
+    "negative": "Author a reusable validator attribute for our SKU type.",
+    "edge": "Add nested collection and imperative validation while preserving indexed error paths."
+  },
+  "immediate-validations:create-custom-validator": {
+    "direct": "Use $immediate-validations:create-custom-validator for a valid SKU attribute.",
+    "indirect": "Create a reusable analyzer-recognized validation rule with a TargetType.",
+    "incomplete": "We need our own validator.",
+    "negative": "Apply the built-in NotEmpty validator to this request.",
+    "edge": "Build a generic validator attribute with formatted message arguments and the exact method shape."
+  },
+  "immediate-validations:localize-validation": {
+    "direct": "Use $immediate-validations:localize-validation for German validation messages.",
+    "indirect": "Resolve built-in and custom validator messages from IStringLocalizer by culture.",
+    "incomplete": "Localize the errors.",
+    "negative": "Return validation failures as HTTP ProblemDetails.",
+    "edge": "Localize a custom message with placeholders and define fallback behavior for an unsupported culture."
+  },
+  "immediate-validations:handle-failure": {
+    "direct": "Use $immediate-validations:handle-failure to map ValidationException to ProblemDetails.",
+    "indirect": "Preserve every property error when translating generated validation failures at the host boundary.",
+    "incomplete": "Map generated validation failures consistently at the application boundary.",
+    "negative": "Add validation constraints to the request model.",
+    "edge": "Use the same failure data in an HTTP API and a CLI without losing indexed paths."
+  },
+  "immediate-cache:cache-handler": {
+    "direct": "Use $immediate-cache:cache-handler to cache GetProduct and invalidate it after updates.",
+    "indirect": "Add read-through coalescing around this query and keep writes coherent.",
+    "incomplete": "Cache this query.",
+    "negative": "Set a size limit and sliding expiration on an existing generated cache entry.",
+    "edge": "Update the cached response with TransformValue and account for cache hits skipping behaviors."
+  },
+  "immediate-cache:configure-entry": {
+    "direct": "Use $immediate-cache:configure-entry to set sliding expiration and size.",
+    "indirect": "Tune eviction priority and callbacks for this existing generated cache.",
+    "incomplete": "Change cache entry options.",
+    "negative": "Create a cache wrapper around this uncached handler.",
+    "edge": "Set dynamic per-key entry options and attach an eviction callback without capturing scoped state."
+  },
+  "immediate-cache:test-cache": {
+    "direct": "Use $immediate-cache:test-cache to prove a second query is a cache hit.",
+    "indirect": "Compose real DI registrations and test coalescing, invalidation, and skipped handler behavior.",
+    "incomplete": "Test this generated cache.",
+    "negative": "Add expiration settings to the cache declaration.",
+    "edge": "Run concurrent misses and assert one handler execution followed by invalidation after a write."
+  },
+  "immediate-injections:register-service": {
+    "direct": "Use $immediate-injections:register-service to register OrderRepository as scoped.",
+    "indirect": "Replace this ordinary AddScoped interface mapping with generated registration.",
+    "incomplete": "Register this service.",
+    "negative": "Register three implementations under different DI keys.",
+    "edge": "Preserve an existing registration when two modules discover the same service."
+  },
+  "immediate-injections:register-keyed-service": {
+    "direct": "Use $immediate-injections:register-keyed-service for keyed payment gateways.",
+    "indirect": "Resolve Stripe and Adyen implementations by distinct Microsoft DI keys.",
+    "incomplete": "Add keyed DI registrations.",
+    "negative": "Register this single repository behind its interface.",
+    "edge": "Register several keys while preserving the intended lifetime and duplicate strategy."
+  },
+  "immediate-injections:register-open-generic": {
+    "direct": "Use $immediate-injections:register-open-generic for IRepository<T>.",
+    "indirect": "Generate an open generic service mapping without closing every entity type.",
+    "incomplete": "Register this generic service.",
+    "negative": "Register the non-generic OrderRepository class as scoped behind IOrderRepository.",
+    "edge": "Select only the intended generic service interface when the implementation closes several contracts."
+  },
+  "immediate-injections:create-factory-or-proxy": {
+    "direct": "Use $immediate-injections:create-factory-or-proxy to construct this client with a factory.",
+    "indirect": "Forward one generated service registration through an existing implementation safely.",
+    "incomplete": "This service needs a factory.",
+    "negative": "Register an ordinary class behind its interface.",
+    "edge": "Choose between factory construction and proxy forwarding while preventing a resolution cycle."
+  },
+  "immediate-injections:add-manual-registration": {
+    "direct": "Use $immediate-injections:add-manual-registration to append an SDK registration.",
+    "indirect": "Join a hand-written service setup to the generated AddMyAppServices method.",
+    "incomplete": "Keep one manual DI registration.",
+    "negative": "Replace this ordinary service with an injection attribute.",
+    "edge": "Order a manual registration relative to generated duplicate strategies without editing generated code."
+  },
+  "immediate-platform:build-vertical-slice": {
+    "direct": "Use $immediate-platform:build-vertical-slice to add a complete CreateOrder feature.",
+    "indirect": "Build the request, validation, endpoint, DI wiring, and cache coherence for one feature.",
+    "incomplete": "Add an order vertical slice.",
+    "negative": "Only change the route metadata of this existing endpoint.",
+    "edge": "Create a slice spanning nested validation and cached reads while keeping every package independently registered."
+  },
+  "immediate-platform:configure-host-slices": {
+    "direct": "Use $immediate-platform:configure-host-slices to isolate worker and API registrations.",
+    "indirect": "Coordinate tags so each host maps and resolves only its own handlers, endpoints, and services.",
+    "incomplete": "Split these shared assemblies by host.",
+    "negative": "Filter only Immediate.Handlers registration in one project.",
+    "edge": "Align nested route-group, handler, injection, and future job tags without broadening a parent subtree."
+  },
+  "immediate-platform:diagnose-generation": {
+    "direct": "Use $immediate-platform:diagnose-generation to investigate missing generated registrations.",
+    "indirect": "The endpoint maps but its handler cannot resolve and several generators may own the failure.",
+    "incomplete": "Generated code is broken.",
+    "negative": "Correct an ordinary handler's IHR0019 shape when Immediate.Handlers clearly owns the failure.",
+    "edge": "Trace an assembly identifier collision through generated hint names, OpenAPI IDs, and DI methods."
+  },
+  "immediate-jobs:create-job": {
+    "direct": "Use $immediate-jobs:create-job to add an idempotent receipt job on the verified preview.",
+    "indirect": "Persist this background command with a stable name, retry policy, and generated scheduler.",
+    "incomplete": "Create a background job.",
+    "negative": "Schedule an already declared job ten minutes from now.",
+    "edge": "Create a payloadless job and explain registration plus at-least-once side effects when preview packages do not restore."
+  },
+  "immediate-jobs:schedule-job": {
+    "direct": "Use $immediate-jobs:schedule-job to enqueue this job in a tenant fair group.",
+    "indirect": "Persist existing typed background work for an absolute instant from a scoped caller.",
+    "incomplete": "Run this job later.",
+    "negative": "Declare the job handler and its retry policy.",
+    "edge": "Schedule from a singleton with NodaTime while checking Redis fair-group limitations and preview compatibility."
+  },
+  "immediate-jobs:test-job": {
+    "direct": "Use $immediate-jobs:test-job to test retries with fake time.",
+    "indirect": "Deterministically drain this background workflow and assert its persisted graph.",
+    "incomplete": "Test the job.",
+    "negative": "Configure durable SQL storage for production workers.",
+    "edge": "Choose capture-only versus the full pipeline and prove idempotency across an advanced retry."
+  },
+  "immediate-jobs:create-recurring-job": {
+    "direct": "Use $immediate-jobs:create-recurring-job for a payloadless nightly cleanup.",
+    "indirect": "Reconcile a Cron schedule in an IANA time zone with explicit overlap behavior.",
+    "incomplete": "Make this job recurring.",
+    "negative": "Enqueue a one-off delayed job.",
+    "edge": "Create an application-managed recurring schedule with DST-safe time-zone and startup reconciliation semantics."
+  },
+  "immediate-jobs:build-workflow": {
+    "direct": "Use $immediate-jobs:build-workflow for import fan-out and fan-in.",
+    "indirect": "Persist a batch graph atomically and release a notification after every parent succeeds.",
+    "incomplete": "Chain these jobs.",
+    "negative": "Enqueue one independent job immediately.",
+    "edge": "Expand a running batch before existing continuations and handle an unknown commit outcome on Redis."
+  },
+  "immediate-jobs:configure-storage": {
+    "direct": "Use $immediate-jobs:configure-storage to configure distributed EF Core storage.",
+    "indirect": "Choose durable job topology with graph support and application-owned migrations.",
+    "incomplete": "Set up job storage.",
+    "negative": "Add OpenTelemetry metrics for existing workers.",
+    "edge": "Compare Redis and SQL for batches and fair queues while detecting mismatched preview provider versions."
+  },
+  "immediate-jobs:operate-jobs": {
+    "direct": "Use $immediate-jobs:operate-jobs to secure the dashboard and add health checks.",
+    "indirect": "Expose privileged monitoring with traces, logs, retry controls, and worker readiness.",
+    "incomplete": "Monitor background jobs.",
+    "negative": "Create the job handler that sends an email.",
+    "edge": "Add graph monitoring on Redis, distinguish local gauges from cluster state, and protect sensitive payloads."
+  }
+}

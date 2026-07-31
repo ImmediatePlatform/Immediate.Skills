@@ -1,0 +1,6 @@
+interface:
+  display_name: "Build job workflow (Preview)"
+  short_description: "Preview: build batches and job continuations"
+  default_prompt: "Use $immediate-jobs:build-workflow against a verified Immediate.Jobs preview baseline to build batches and job continuations."
+policy:
+  allow_implicit_invocation: false

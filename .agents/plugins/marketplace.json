@@ -1,0 +1,92 @@
+{
+  "name": "immediate",
+  "interface": {
+    "displayName": "ImmediatePlatform"
+  },
+  "plugins": [
+    {
+      "name": "immediate-platform",
+      "source": {
+        "source": "local",
+        "path": "./plugins/immediate-platform"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "immediate-handlers",
+      "source": {
+        "source": "local",
+        "path": "./plugins/immediate-handlers"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "immediate-apis",
+      "source": {
+        "source": "local",
+        "path": "./plugins/immediate-apis"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "immediate-validations",
+      "source": {
+        "source": "local",
+        "path": "./plugins/immediate-validations"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "immediate-cache",
+      "source": {
+        "source": "local",
+        "path": "./plugins/immediate-cache"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "immediate-injections",
+      "source": {
+        "source": "local",
+        "path": "./plugins/immediate-injections"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "immediate-jobs",
+      "source": {
+        "source": "local",
+        "path": "./plugins/immediate-jobs"
+      },
+      "policy": {
+        "installation": "NOT_AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

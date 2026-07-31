@@ -1,0 +1,6 @@
+interface:
+  display_name: "Schedule Immediate job (Preview)"
+  short_description: "Preview: schedule delayed background work"
+  default_prompt: "Use $immediate-jobs:schedule-job against a verified Immediate.Jobs preview baseline to schedule background work."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Immediate API endpoint"
+  short_description: "Expose handlers as generated API endpoints"
+  default_prompt: "Use $immediate-apis:create-endpoint to expose handlers as generated API endpoints."

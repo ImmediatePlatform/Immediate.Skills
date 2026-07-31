@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Immediate behavior"
+  short_description: "Build ordered Immediate handler behaviors"
+  default_prompt: "Use $immediate-handlers:create-behavior to build ordered Immediate handler behaviors."

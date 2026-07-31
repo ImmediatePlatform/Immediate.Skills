@@ -1,0 +1,4 @@
+interface:
+  display_name: "Register Immediate service"
+  short_description: "Generate common dependency registrations"
+  default_prompt: "Use $immediate-injections:register-service to generate common dependency registrations."

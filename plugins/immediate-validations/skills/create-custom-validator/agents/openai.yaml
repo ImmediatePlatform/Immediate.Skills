@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create custom validator"
+  short_description: "Build Immediate custom validator attributes"
+  default_prompt: "Use $immediate-validations:create-custom-validator to build Immediate custom validator attributes."

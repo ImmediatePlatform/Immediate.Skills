@@ -1,0 +1,4 @@
+interface:
+  display_name: "Customize Immediate endpoint"
+  short_description: "Customize endpoint metadata and results"
+  default_prompt: "Use $immediate-apis:customize-endpoint to customize endpoint metadata and results."

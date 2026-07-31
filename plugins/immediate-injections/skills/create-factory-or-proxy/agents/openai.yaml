@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create factory or proxy"
+  short_description: "Generate factory and proxy registrations"
+  default_prompt: "Use $immediate-injections:create-factory-or-proxy to generate factory and proxy registrations."

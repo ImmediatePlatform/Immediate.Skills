@@ -1,0 +1,23 @@
+{
+  "name": "immediate-injections",
+  "version": "0.1.0",
+  "description": "Focused workflows for source-generated dependency injection with Immediate.Injections.",
+  "author": {
+    "name": "ImmediatePlatform",
+    "url": "https://github.com/ImmediatePlatform"
+  },
+  "homepage": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "repository": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "license": "MIT",
+  "keywords": ["dotnet", "immediate-injections", "dependency-injection", "agent-skills"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Immediate.Injections",
+    "shortDescription": "Generate Microsoft DI registrations.",
+    "longDescription": "Register common, keyed, generic, factory, proxy, and manual services with Immediate.Injections.",
+    "developerName": "ImmediatePlatform",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "defaultPrompt": "Help me register this service with Immediate.Injections."
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handle validation failure"
+  short_description: "Translate Immediate validation failures"
+  default_prompt: "Use $immediate-validations:handle-failure to translate Immediate validation failures."

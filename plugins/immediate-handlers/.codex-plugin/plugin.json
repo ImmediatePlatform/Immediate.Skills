@@ -1,0 +1,23 @@
+{
+  "name": "immediate-handlers",
+  "version": "0.1.0",
+  "description": "Focused workflows for building applications with Immediate.Handlers.",
+  "author": {
+    "name": "ImmediatePlatform",
+    "url": "https://github.com/ImmediatePlatform"
+  },
+  "homepage": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "repository": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "license": "MIT",
+  "keywords": ["dotnet", "immediate-handlers", "cqrs", "agent-skills"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Immediate.Handlers",
+    "shortDescription": "Build source-generated handlers and behaviors.",
+    "longDescription": "Create, stream, register, and extend Immediate.Handlers request pipelines with focused application-development workflows.",
+    "developerName": "ImmediatePlatform",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "defaultPrompt": "Help me build this request workflow with Immediate.Handlers."
+  }
+}

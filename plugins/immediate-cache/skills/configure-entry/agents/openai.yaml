@@ -1,0 +1,4 @@
+interface:
+  display_name: "Configure cache entry"
+  short_description: "Tune Immediate cache entry behavior"
+  default_prompt: "Use $immediate-cache:configure-entry to tune Immediate cache entry behavior."

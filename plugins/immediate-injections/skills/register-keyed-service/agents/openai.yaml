@@ -1,0 +1,4 @@
+interface:
+  display_name: "Register keyed service"
+  short_description: "Generate keyed dependency registrations"
+  default_prompt: "Use $immediate-injections:register-keyed-service to generate keyed dependency registrations."

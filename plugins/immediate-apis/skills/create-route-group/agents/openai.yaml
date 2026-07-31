@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Immediate route group"
+  short_description: "Group generated endpoints and conventions"
+  default_prompt: "Use $immediate-apis:create-route-group to group generated endpoints and conventions."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Register open generic"
+  short_description: "Generate open generic registrations"
+  default_prompt: "Use $immediate-injections:register-open-generic to generate open generic registrations."

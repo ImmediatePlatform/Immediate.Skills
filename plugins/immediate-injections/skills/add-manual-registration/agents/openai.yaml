@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add manual registration"
+  short_description: "Extend generated service registration manually"
+  default_prompt: "Use $immediate-injections:add-manual-registration to extend generated service registration manually."

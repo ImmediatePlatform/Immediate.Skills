@@ -1,0 +1,4 @@
+interface:
+  display_name: "Diagnose Immediate generation"
+  short_description: "Debug generators, analyzers, and DI"
+  default_prompt: "Use $immediate-platform:diagnose-generation to debug generators, analyzers, and DI."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Localize Immediate validation"
+  short_description: "Localize generated validation messages"
+  default_prompt: "Use $immediate-validations:localize-validation to localize generated validation messages."

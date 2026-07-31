@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create streaming handler"
+  short_description: "Build streaming handlers and behaviors"
+  default_prompt: "Use $immediate-handlers:create-streaming-handler to build streaming handlers and behaviors."

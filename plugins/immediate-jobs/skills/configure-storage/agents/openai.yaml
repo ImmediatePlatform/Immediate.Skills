@@ -1,0 +1,6 @@
+interface:
+  display_name: "Configure job storage (Preview)"
+  short_description: "Preview: configure durable job storage"
+  default_prompt: "Use $immediate-jobs:configure-storage against a verified Immediate.Jobs preview baseline to configure durable storage."
+policy:
+  allow_implicit_invocation: false

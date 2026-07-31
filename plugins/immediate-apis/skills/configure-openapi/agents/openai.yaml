@@ -1,0 +1,4 @@
+interface:
+  display_name: "Configure Immediate OpenAPI"
+  short_description: "Configure schemas and endpoint descriptions"
+  default_prompt: "Use $immediate-apis:configure-openapi to configure schemas and endpoint descriptions."

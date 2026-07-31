@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Immediate handler"
+  short_description: "Create commands, queries, and request handlers"
+  default_prompt: "Use $immediate-handlers:create-handler to create commands, queries, and request handlers."

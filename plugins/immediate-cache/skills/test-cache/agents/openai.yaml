@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test Immediate cache"
+  short_description: "Test generated caches with real DI"
+  default_prompt: "Use $immediate-cache:test-cache to test generated caches with real DI."

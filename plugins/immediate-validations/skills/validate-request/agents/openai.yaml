@@ -1,0 +1,4 @@
+interface:
+  display_name: "Validate Immediate request"
+  short_description: "Add generated validation to request types"
+  default_prompt: "Use $immediate-validations:validate-request to add generated validation to request types."

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Create Immediate job (Preview)"
+  short_description: "Preview: create generated background jobs"
+  default_prompt: "Use $immediate-jobs:create-job against a verified Immediate.Jobs preview baseline to create a generated background job."
+policy:
+  allow_implicit_invocation: false

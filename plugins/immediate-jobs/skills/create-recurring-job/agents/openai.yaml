@@ -1,0 +1,6 @@
+interface:
+  display_name: "Create recurring job (Preview)"
+  short_description: "Preview: create recurring job schedules"
+  default_prompt: "Use $immediate-jobs:create-recurring-job against a verified Immediate.Jobs preview baseline to create recurring schedules."
+policy:
+  allow_implicit_invocation: false
