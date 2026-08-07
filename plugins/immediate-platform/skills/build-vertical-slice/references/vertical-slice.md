@@ -25,7 +25,6 @@ every behavior and the method.
 Startup commonly contains:
 
 ```csharp
-services.AddMyAppBehaviors();
 services.AddMyAppHandlers();
 services.AddMemoryCache();       // only with Cache
 services.AddMyAppCaches();       // only with Cache
@@ -36,8 +35,9 @@ app.MapMyAppEndpoints();         // only with Apis
 ```
 
 Immediate.Validations has no generated registration method; add
-`ValidationBehavior<,>` to `[assembly: Behaviors(...)]`. Generated method names
-use the assembly identifier.
+`ValidationBehavior<,>` to `[assembly: Behaviors(...)]`. `AddMyAppHandlers()`
+registers the concrete behavior dependencies for each selected handler.
+Generated method names use the assembly identifier.
 
 Check installed versions. Released packages support net8.0-net10.0 in the
 source baseline, but packages version independently. Treat the target project's

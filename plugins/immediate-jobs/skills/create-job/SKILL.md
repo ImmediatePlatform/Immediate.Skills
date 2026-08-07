@@ -16,7 +16,7 @@ Create durable background work without accidentally changing its persisted contr
 5. Put the request first and `CancellationToken` last. Use `EmptyJobRequest` only for payloadless work.
 6. Give production jobs an explicit stable `Name`; treat payload shape, job name, context extractor keys, and queue name as persisted schema.
 7. Select retry, timeout, concurrency, backoff, overlap, and queue policies deliberately. Make the handler idempotent for at-least-once delivery.
-8. Register behaviors, handlers, and jobs with aligned tags, then run the full host so workers execute.
+8. Register handlers and jobs with aligned tags. Handler registration adds each selected job handler's behavior dependencies. Run the full host so workers execute.
 9. Build and add a deterministic test that covers success plus the important retry or idempotency path.
 
 ## Guardrails

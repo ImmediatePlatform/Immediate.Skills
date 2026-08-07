@@ -57,10 +57,12 @@ matching, so `IEnumerable<User>` and `IEnumerable<User>?` differ.
 When a behavior does not run, check nullability, constraints, handler-level
 replacement, handler tag filtering, and whether the behavior is abstract.
 Inspect the generated `Handler` constructor: an attached behavior appears as a
-constructor parameter.
+constructor parameter. An abstract behavior reports `IHR0024` and prevents the
+affected generated handler from being emitted.
 
-Call `services.AddXxxBehaviors()`. Referenced behaviors are registered with
-`TryAddTransient`; an earlier explicit registration wins.
+Call `services.AddXxxHandlers()`. Each selected handler registers the concrete
+behavior types in its generated pipeline with `TryAddTransient`; an earlier
+explicit registration for the same closed service type wins.
 
 ## Sources
 

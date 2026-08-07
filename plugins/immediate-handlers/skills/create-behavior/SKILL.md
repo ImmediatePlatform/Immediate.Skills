@@ -15,14 +15,14 @@ Build a compile-time-selected pipeline behavior and prove that it attaches to th
 4. Decide placement deliberately: assembly-wide, handler-specific, or a reusable attribute bundle.
 5. Order the list from outermost to innermost. Preserve required global behaviors when adding a handler-level list because that list replaces the assembly list.
 6. Use supported concrete type constraints to select handlers. Verify nullability and fixed request/response types match.
-7. Confirm `AddXxxBehaviors()` is called and dependencies are registered. Do not try to configure behavior lifetime; generated behavior registrations are transient.
+7. Confirm `AddXxxHandlers()` is called. It registers each selected handler's concrete behavior dependencies as transient services.
 8. Build and inspect the generated handler constructor when attachment is uncertain. Run focused behavior-order and short-circuit tests.
 
 ## Boundaries
 
 - Use `create-streaming-handler` for `StreamingBehavior<,>` and `IAsyncEnumerable<T>` pipelines.
 - Keep request validation in the Immediate.Validations workflow unless implementing an alternative validation behavior was explicitly requested.
-- Do not use tags to filter behavior registrations; tags filter handlers, while `AddXxxBehaviors()` registers every referenced behavior.
+- Treat tags as handler filters. Behavior registration follows the selected handlers rather than accepting a separate tag filter.
 
 ## Handoff
 

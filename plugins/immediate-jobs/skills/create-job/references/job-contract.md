@@ -32,13 +32,14 @@ skip. Select overrides from application requirements rather than copying them.
 Register the generated pieces independently:
 
 ```csharp
-services.AddMyAppBehaviors();
 services.AddMyAppHandlers();
 services.AddMyAppJobs(options => options.UseInMemory());
 ```
 
-Align registration tags across handlers and jobs. The generated scheduler is
-scoped, the runtime is singleton, and each attempt receives a fresh scope.
+`AddMyAppHandlers()` also registers each selected handler's concrete behavior
+dependencies. Align registration tags across handlers and jobs. The generated
+scheduler is scoped, the runtime is singleton, and each attempt receives a
+fresh scope.
 
 ## Sources
 

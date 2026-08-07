@@ -1,6 +1,6 @@
 {
   "name": "immediate-jobs",
-  "version": "0.1.0-preview.1",
+  "version": "0.1.0-preview.2",
   "description": "Preview workflows for building and operating background jobs with Immediate.Jobs.",
   "author": {
     "name": "ImmediatePlatform",
