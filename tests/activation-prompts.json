@@ -178,15 +178,22 @@
     "direct": "Use $immediate-jobs:test-job to test retries with fake time.",
     "indirect": "Deterministically drain this background workflow and assert its persisted graph.",
     "incomplete": "Test the job.",
-    "negative": "Configure durable SQL storage for production workers.",
+    "negative": "Run the packaged conformance catalog against this custom Redis job storage provider.",
     "edge": "Choose capture-only versus the full pipeline and prove idempotency across an advanced retry."
+  },
+  "immediate-jobs:test-storage-provider": {
+    "direct": "Use $immediate-jobs:test-storage-provider to verify this custom SQL job storage provider.",
+    "indirect": "Run the framework-neutral storage contract through this provider's public DI registration.",
+    "incomplete": "Test this job storage provider.",
+    "negative": "Use fake time to test one application job's retry and cancellation behavior.",
+    "edge": "Adapt the catalog for Redis with isolated prefixes, fake time, and only queue plus recurring capabilities."
   },
   "immediate-jobs:create-recurring-job": {
     "direct": "Use $immediate-jobs:create-recurring-job for a payloadless nightly cleanup.",
     "indirect": "Reconcile a Cron schedule in an IANA time zone with explicit overlap behavior.",
     "incomplete": "Make this job recurring.",
     "negative": "Enqueue a one-off delayed job.",
-    "edge": "Create an application-managed recurring schedule with DST-safe time-zone and startup reconciliation semantics."
+    "edge": "Trigger a tag-filtered payloadless job by stable job name while keeping dynamic schedule names distinct."
   },
   "immediate-jobs:build-workflow": {
     "direct": "Use $immediate-jobs:build-workflow for import fan-out and fan-in.",

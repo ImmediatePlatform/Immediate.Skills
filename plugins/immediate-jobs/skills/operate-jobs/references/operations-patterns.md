@@ -1,31 +1,54 @@
 # Operations patterns
 
-Map the dashboard as an administrative surface and require a named policy:
+Register the dashboard before building the app, then map it under an operator-only
+path with a named policy:
 
 ```csharp
-app.MapImmediateJobsDashboard("/jobs", options =>
-{
-    options.RequireAuthorization("operations");
-});
+services.AddImmediateJobsDashboard(options =>
+	options.RequireAuthorization("operations"));
+
+app.MapImmediateJobsDashboard("/jobs");
 ```
 
-The surface includes payloads, errors, job and recurring mutations, SSE state,
-server snapshots, and graph operations when supported. Without
-`RequireAuthorization`, it is development-only and returns 403 elsewhere.
+The surface includes payloads, errors, retained execution history, SSE state,
+server snapshots, job and recurring mutations, and graph operations when the
+provider supports them. Without `RequireAuthorization`, it is available only in
+the `Development` environment and returns 403 elsewhere. Use
+`AllowInAnyEnvironment` only for a trusted custom development environment; an
+authorization policy remains in force when both options are set.
 
-Export the `Immediate.Jobs` `ActivitySource` and `Meter`. Execution activities
-are consumers linked to enqueue trace context. Metrics cover enqueue, success,
-failure, retry, duration, local queue depth, and active workers. Worker logging
-scopes include `JobName`, `QueueName`, `JobId`, and `Attempt`.
+Operators can retry terminal failures, move scheduled work to `Pending` with
+Run now, cancel non-terminal jobs or batches, and pause, resume, or trigger
+recurring schedules. Cancellation is stored, but it does not forcibly stop
+handler code already running. If that handler finishes later, its result cannot
+replace the recorded cancellation.
 
-Register the health check returned by generated job registration. It combines
-scheduler liveness and provider connectivity. Use durable monitoring snapshots
-for cluster state; the observable gauges are local runtime observations.
+Export the `Immediate.Jobs` activity source and meter. Execution traces link back
+to the enqueue trace. Metrics cover enqueue, success, failure, retry, duration,
+local queue depth, and active workers. The gauges cover only the current process,
+so use provider snapshots for complete cluster totals. Worker logging scopes
+include `JobName`, `QueueName`, `JobId`, and `Attempt`.
 
-Use scoped `IJobMonitor` for records and `IJobBatchMonitor` for graph-capable
-providers. Apply paging and authorization to custom endpoints. Telemetry-link
-factories should build HTTP(S) or dashboard-relative destinations from the
-latest persisted attempt and return null when a link does not apply.
+Each acquired attempt retains its outcome, worker, timing, trace/span IDs, and
+failure text until its job or batch is removed. A telemetry-link callback receives
+`Execution = null` for a job-level link and the exact `JobExecutionRecord` for an
+attempt-level link. Use the execution record for one trace; use `Job.Id` for a log
+query across retries. Return null when a link does not apply.
+
+Chain `AddHealthCheck` from generated job registration. It combines scheduler
+liveness and provider connectivity. Map a tag-filtered readiness endpoint and
+return HTTP 503 for `Degraded` if the scheduler must be running before the app is
+ready. At source revision `ee5f51d`, the check also needs this temporary bridge:
+
+```csharp
+services.AddSingleton<ImmediateJobsOptions>(provider =>
+	provider.GetRequiredService<IOptions<ImmediateJobsOptions>>().Value);
+```
+
+Use scoped `IJobMonitor` for a job and `IBatchMonitor` for graph status; both live in
+`Immediate.Jobs.Shared.Interfaces`. Apply authorization and paging to custom
+endpoints. Low-level execution history is available through
+`IJobStorage.QueryJobExecutionsAsync` in `Immediate.Jobs.Shared.Storage`.
 
 ## Sources
 

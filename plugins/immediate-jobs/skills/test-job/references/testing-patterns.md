@@ -4,15 +4,20 @@ Use `JobTestHarness` for deterministic integration-style tests of scheduling,
 serialization, the Immediate.Handlers pipeline, storage transitions, retries,
 recurring materialization, and graph workflows. Configure its services with the
 generated `Add...Handlers` and `Add...Jobs` methods plus application dependencies.
+Do not chain `ConfigureStorage` in the harness callback; the harness installs its
+own in-memory provider and `FakeTimeProvider` after application registration.
 
 Typical operations include asserting that a typed scheduler persisted work,
 calling `DrainAsync`, advancing fake time with `AdvanceTimeAndDrainAsync`, and
 querying records or graphs after execution. Use
 `RunThroughPipelineAsync<TPayload>` when the
-test must exercise behaviors and the generated invoker.
+test must exercise behaviors and the generated invoker. `Batches` is an
+`IBatchScheduler` from `Immediate.Jobs.Shared.Interfaces`; job and execution
+records are under `Immediate.Jobs.Shared.Apis`.
 
 Use `CaptureOnlyJobScheduler` when a unit under test only needs to request
-background work. Inspect `Captures` or `Last` and clear them between phases.
+background work. Inspect `Captures`, `Last`, or `CancelledIds`, and clear them
+between phases.
 Use the recurring capture equivalent for dynamic schedule commands. Capture
 helpers do not prove serialization or worker execution, so retain at least one
 harness test for critical jobs.

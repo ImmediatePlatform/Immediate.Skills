@@ -21,9 +21,11 @@ Payloadless jobs use `EmptyJobRequest` and are the only jobs eligible for a
 declarative Cron schedule.
 
 Payloads and captured context are persisted JSON. Keep them small and use
-source-generatable shapes. A job name is a durable discriminator, not display
-text. Set it explicitly before production and do not reuse it for a different
-payload contract.
+source-generatable shapes. Generated metadata supports nullable value types and
+public constructor, `init`, optional, and `required` property shapes. Avoid
+interfaces, abstract members, and unsupported collection graphs. A job name is
+part of the stored data, not display text. Set it explicitly before production
+and do not reuse it for a different payload shape.
 
 Default policies are three attempts, no timeout, unlimited job-level
 concurrency, exponential jittered backoff with a five-second base, and overlap
@@ -32,13 +34,18 @@ skip. Select overrides from application requirements rather than copying them.
 Register the generated pieces independently:
 
 ```csharp
-services.AddMyAppBehaviors();
 services.AddMyAppHandlers();
-services.AddMyAppJobs(options => options.UseInMemory());
+services.AddMyAppJobs()
+	.ConfigureStorage(storage => storage.UseInMemory());
 ```
 
-Align registration tags across handlers and jobs. The generated scheduler is
-scoped, the runtime is singleton, and each attempt receives a fresh scope.
+Both generated methods live in the project's root namespace. Import it from
+top-level startup code. `AddMyAppHandlers` registers the concrete behavior
+dependencies that apply to each selected handler; there is no separate behavior
+registration call. Align tags across handlers and jobs. The generated scheduler
+is scoped, the runtime is singleton, and each attempt receives a fresh scope.
+Repeated generated registration does not add another worker or duplicate job
+descriptors, but storage may be configured only once.
 
 ## Sources
 

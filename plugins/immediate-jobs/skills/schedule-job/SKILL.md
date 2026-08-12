@@ -16,12 +16,13 @@ Persist work through the generated typed scheduler and preserve scope, timing, a
 5. Choose enqueue, relative delay, or absolute instant based on the actual requirement; pass cancellation only for persistence of the scheduling operation.
 6. Add a fair-group ID only when ordering by tenant or key is required and the configured provider supports fair acquisition.
 7. Use the NodaTime companion package and registration before selecting `Duration` or `Instant` overloads.
-8. Treat the returned `JobHandle` as opaque and distinguish successful persistence from successful execution.
-9. Test the persisted schedule, timing boundary, group normalization, and caller scope.
+8. Treat the returned `JobHandle` as opaque and distinguish successful persistence from successful execution. When cancellation is required, call `CancelAsync` on the same generated scheduler.
+9. Test the persisted schedule, timing boundary, group normalization, caller scope, and cancellation state where applicable.
 
 ## Guardrails
 
 - Do not tell callers that cancelling the scheduling token cancels later execution.
+- Do not claim `CancelAsync` forcibly stops handler code already running. It stores the cancellation and prevents a later result from replacing it.
 - Do not resolve a generated scheduler directly from a singleton root provider; context capture may require scoped services.
 - Do not use fair groups with Redis or without enabling fair queues. Group IDs are limited to 128 characters; whitespace means no group.
 - Do not mix NodaTime payloads or overloads into a host that lacks the matching preview companion registration.

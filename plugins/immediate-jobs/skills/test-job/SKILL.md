@@ -1,6 +1,6 @@
 ---
 name: test-job
-description: Test Immediate.Jobs declarations, scheduling, retries, timing, context, recurring work, and workflow graphs with the preview testing harness or capture-only schedulers. Use when adding deterministic job tests against an explicitly verified Immediate.Jobs.Testing preview version.
+description: Test Immediate.Jobs declarations, scheduling, cancellation, retries, timing, context, recurring work, and workflow graphs with the preview harness or capture-only schedulers. Use for application behavior; use test-storage-provider for custom storage.
 ---
 
 # Test an Immediate job
@@ -12,10 +12,10 @@ Prove persisted and execution behavior without relying on real time or a live wo
 1. Verify that `Immediate.Jobs.Testing` matches the restored core preview revision.
 2. Identify whether the test needs full pipeline execution or only scheduling capture.
 3. Read [testing-patterns.md](references/testing-patterns.md).
-4. Configure `JobTestHarness` with the same generated handler/job registration and required dependencies as production.
+4. Configure `JobTestHarness` with the same generated handler/job registration and required dependencies as production, but do not call `ConfigureStorage`; the harness installs in-memory storage and fake time.
 5. Use its fake time provider and drain methods for delayed, retry, timeout, and recurring behavior.
 6. Assert the enqueued record before draining when schedule shape matters; query the durable record or graph after execution.
-7. Use capture-only job or recurring schedulers for unit tests whose subject merely requests work and should not run it.
+7. Use capture-only job or recurring schedulers for unit tests whose subject merely requests work and should not run it. Assert `CancelledIds` when the subject cancels a captured handle.
 8. Exercise idempotency or retry behavior explicitly for side-effecting jobs.
 9. Build and run the focused tests, then run the relevant project suite.
 
@@ -25,6 +25,7 @@ Prove persisted and execution behavior without relying on real time or a live wo
 - Do not substitute direct handler invocation when the behavior pipeline, serialization, restored context, or retry boundary is under test.
 - Do not mistake a captured scheduling request for proof that a worker can deserialize and execute it.
 - Do not combine mismatched preview revisions of core, providers, and testing helpers.
+- Do not use this workflow to claim a custom `IJobStorage` is correct; use `$immediate-jobs:test-storage-provider` and its packaged conformance cases.
 
 ## Handoff
 

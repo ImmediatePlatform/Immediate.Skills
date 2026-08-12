@@ -39,3 +39,15 @@ upgrades as a separately reported application decision.
 - Documentation review resolved 111 exact Immediate.Dev citations and
   spot-checked high-risk APIs against docs and source. Three Jobs API-name
   errors found by that review were corrected before release gating.
+
+## Immediate.Jobs forward tests — 2026-08-12
+
+Three fresh agents used the updated preview skills without editing either
+repository. Their answers were checked against Immediate.Jobs source commit
+`ee5f51d86e0056146f3955d0aeea80597ed86ccb`.
+
+| Skill | Scenario | Result | Guidance refined from the test |
+| --- | --- | --- | --- |
+| `$immediate-jobs:test-storage-provider` | xUnit catalog for a custom Redis provider with queue and recurring support | Correctly selected `Queue | Recurring` and produced one test row per case | Name the fake-time namespace/package and keep connection, data identifier, service provider, and cleanup in one fixture. |
+| `$immediate-jobs:configure-storage` | EF Core across three worker processes with bound options, fair queues, and readiness | Correctly selected distributed mode and fluent configuration | Require `AddDbContextFactory`, tag-filter readiness mapping, and the `ee5f51d` health-check options bridge. |
+| `$immediate-jobs:create-recurring-job` | Trigger a payloadless job by stable name when tags exclude some jobs | Correctly used generated `RecurringJobs` and stable job identity | State no-tag registration semantics, case-sensitive names, failure timing, payloadless scope, and provider-qualified reconciliation. |

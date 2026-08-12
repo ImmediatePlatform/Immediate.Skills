@@ -16,12 +16,25 @@ cancellation token cancels only the storage operation. `JobHandle` is an opaque
 durable identity suitable for dependencies and monitoring.
 
 Fair overloads accept a group ID for round-robin acquisition across active
-groups. Enable fair queues in job options and use a provider that supports them.
+groups. Enable fair queues from the registration builder and use a provider that
+supports them:
+
+```csharp
+services.AddMyAppJobs()
+	.UseFairQueues()
+	.ConfigureStorage(storage => storage.UseInMemory());
+```
+
 Whitespace normalizes to no group and identifiers longer than 128 characters
 are rejected. Redis does not implement fair acquisition.
 
 Generated schedulers are scoped because enqueue-time context extractors may
 read scoped tenant or request state. Singleton callers must create a scope.
+
+Use `scheduler.CancelAsync(handle, cancellationToken)` for a non-terminal
+invocation. The token cancels only that storage operation. The recorded
+cancellation does not forcibly stop handler code already running. If the handler
+finishes later, its result cannot replace the cancelled state.
 
 The `Immediate.Jobs.NodaTime` companion adds `Duration`, `Instant`, and
 `DateTimeZone` support after the fixed `AddImmediateJobsNodaTime()` extension is
