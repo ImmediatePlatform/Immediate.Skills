@@ -45,6 +45,27 @@ on 2026-07-30. The preview guidance is therefore authored from the checked-out
 source/docs but is not offered for installation until a compatible package set
 can be restored and forward-tested.
 
+## Implementation update — 2026-08-12
+
+- Immediate.Jobs guidance is synchronized through source commit
+  `ee5f51d86e0056146f3955d0aeea80597ed86ccb`.
+- The plugin now contains eight skills. `test-storage-provider` covers the packaged storage checks,
+  while `test-job` remains focused on application jobs.
+- The Jobs plugin version is `0.1.0-preview.2`. It remains `NOT_AVAILABLE`, and every preview skill
+  still disables implicit invocation.
+- The activation matrix now covers all 31 repository skills with the same five prompt categories.
+
+## Implementation update, 2026-08-28
+
+- Immediate.Jobs guidance is synchronized through merged source commit
+  `32b7b8141e46b4c04dcd3177747ad045709bc5b2`.
+- The Jobs skills now use the payload-first scheduler, typed continuation handles, unified monitor,
+  dashboard options builder, capturing storage harness, and current handle member names.
+- Worker, fair-queue, dashboard, and Redis guidance records both direct options configuration and
+  `IConfiguration` binding.
+- The Jobs plugin version is `0.1.0-preview.3`. It remains `NOT_AVAILABLE`, and every skill still
+  disables implicit invocation.
+
 ## Naming and packaging
 
 Use the conceptual namespace `$immediate.<area>:<subskill>`. Codex's actual
@@ -396,6 +417,7 @@ Implement Jobs in this order:
 | 5 | `$immediate-jobs:build-workflow` | Build atomic batches, continuations, chains, fan-out/fan-in, and dynamic expansion. | `batches-and-continuations` |
 | 6 | `$immediate-jobs:configure-storage` | Choose and configure in-memory, EF Core, LinqToDB, or Redis storage with clear capability tradeoffs. | `choosing-storage`, `configuring-storage-providers` |
 | 7 | `$immediate-jobs:operate-jobs` | Secure monitoring, add observability and health checks, and reason about worker lifecycle and delivery guarantees. | `dashboard-and-monitoring`, `observability-and-health`, `delivery-guarantees` |
+| 8 | `$immediate-jobs:test-storage-provider` | Run the public storage checks against an isolated custom-provider fixture. | `testing-jobs`, `choosing-storage`, `api-reference` |
 
 `create-job` must explicitly guard the two most consequential pitfalls from the
 docs: Jobs registration does not replace Handlers registration, and delivery is

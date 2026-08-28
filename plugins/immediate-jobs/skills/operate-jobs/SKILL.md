@@ -12,12 +12,12 @@ Expose enough operational control to diagnose work without leaking payloads or o
 1. Verify compatible Jobs, provider, and dashboard preview revisions plus the storage capabilities in use.
 2. Identify operators, sensitive payload/error fields, authorization policy, telemetry destinations, retention, and incident actions.
 3. Read [operations-patterns.md](references/operations-patterns.md).
-4. Add the dashboard package and map it beneath an administrative prefix with a named authorization policy. Treat every UI, JSON, SSE, retry, delete, pause, trigger, and graph action as privileged.
+4. Chain `AddImmediateJobsDashboard` from generated job registration, configure it directly or bind its `OptionsBuilder<T>` callback to `IConfiguration` before building the app, and map it under an operator-only path with a named authorization policy. Protect every UI, JSON, SSE, retry, run-now, cancel, delete, pause, trigger, and graph action.
 5. Export the `Immediate.Jobs` activity source and meter. Include structured logging scopes.
 6. Register the scheduler/provider health check and map it to the appropriate readiness surface.
-7. Add trace/log links using persisted execution metadata; hide links when the latest attempt lacks suitable identifiers.
-8. Use scoped `IJobMonitor` and, only with graph capability, `IJobBatchMonitor` for custom status endpoints with authorization and paging.
-9. Test non-development access, policy enforcement, provider outages, retry/delete preconditions, unsupported graph routes, SSE reconnect behavior, and redaction expectations.
+7. Add trace/log links using the exact retained execution when a link targets one attempt. Use `context.Job.JobHandle` for links that span retries and read its `Value` only when the destination needs a string.
+8. Use scoped `JobMonitor` for reads and management commands. Depend on its read-only `IJobMonitor` interface when a component needs no mutations. Batch reads return `null` without graph capability.
+9. Test access and policy enforcement outside development. Also cover provider outages, mutation preconditions, unsupported graph routes, SSE reconnection, and redaction.
 
 ## Guardrails
 
