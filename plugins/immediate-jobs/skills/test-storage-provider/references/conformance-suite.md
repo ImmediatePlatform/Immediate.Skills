@@ -7,9 +7,9 @@ capability flags are under `Immediate.Jobs.Shared.Storage`.
 | --- | --- | --- |
 | `IJobStorage` | `Queue` | Lifecycle, enqueue/acquire, leases, executions, queries, monitoring, mutations, retention, health, and disposal |
 | `IRecurringJobStorage` | `Recurring` | Schedule lifecycle, reconciliation, due scanning, deduplication, materialization, and cleanup |
-| `IJobGraphStorage` | `Graph` | Atomic batches, edges, triggers, fan-in, expansion, cancellation, deletion, and purge |
+| `IJobGraphStorage` | `Graph` | Atomic batches, edges, triggers, delayed release, fan-in, expansion, cancellation, deletion, and purge |
 | `IFairQueueStorage` | `FairQueues` | Group rotation, noisy-neighbor ordering, ordinary-order fallback, and concurrent claims |
-| `IJobStorageReplica` | `Replica` | Exact-ID acquisition, stale-worker protection, execution history, and restored records |
+| `IJobStorageReplica` | `Replica` | Exact-handle acquisition, stale-worker protection, execution history, and restored records |
 
 `GetCases` always includes `Queue` and adds optional suites from one flag set.
 Each `RunAsync` resolves exactly one `IJobStorage`. Before checking behavior, it

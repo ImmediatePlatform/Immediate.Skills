@@ -179,7 +179,7 @@
     "indirect": "Deterministically drain this background workflow and assert its persisted graph.",
     "incomplete": "Test the job.",
     "negative": "Run the packaged conformance catalog against this custom Redis job storage provider.",
-    "edge": "Choose capture-only versus the full pipeline and prove idempotency across an advanced retry."
+    "edge": "Choose captured storage inspection versus the full pipeline and prove idempotency across an advanced retry."
   },
   "immediate-jobs:test-storage-provider": {
     "direct": "Use $immediate-jobs:test-storage-provider to verify this custom SQL job storage provider.",

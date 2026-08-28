@@ -12,12 +12,12 @@ Define repeatable schedules while keeping persisted identity, reconciliation, an
 1. Verify the checked-out Immediate.Jobs preview versions and the intended provider's recurring capability.
 2. Confirm that the job is payloadless. If each occurrence needs data, have it load current data by stable identifiers or reconsider the design.
 3. Read [recurring-patterns.md](references/recurring-patterns.md).
-4. Use code-defined Cron metadata for deployment-owned schedules and the generated typed scheduler for application-managed schedules. Use the root-namespace `RecurringJobs` dispatcher when infrastructure must trigger a payloadless job by stable name.
+4. Use code-defined Cron metadata for deployment-owned schedules and the generated typed scheduler for application-managed schedules. The scheduler persists its generated queue name with each schedule. Use the root-namespace `RecurringJobs` dispatcher when infrastructure must trigger a payloadless job by stable name.
 5. Set an explicit stable job name, validate five- or six-field Cron syntax, and use an IANA time-zone ID; UTC is the default.
 6. Select overlap behavior—skip, queue, or concurrent—based on duration and business correctness.
 7. With a recurring-capable provider, account for startup reconciliation: changed code schedules recalculate their next run, removed code schedules are deleted, and dynamic schedules remain.
 8. Use the NodaTime companion only after its matching registration is present on every worker.
-9. Test reconciliation, next-run calculation, trigger-now behavior, overlap, pause/remove behavior where applicable, and time-zone edges. For name-based dispatch, also test unknown names and tag-filtered registration.
+9. Test reconciliation, queue preservation, next-run calculation, trigger-now behavior, overlap, pause/remove behavior where applicable, and time-zone edges. For name-based dispatch, also test unknown names and tag-filtered registration.
 
 ## Guardrails
 

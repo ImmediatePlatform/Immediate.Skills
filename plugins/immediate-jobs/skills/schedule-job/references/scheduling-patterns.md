@@ -7,13 +7,15 @@ the timing requirement:
 JobHandle now = await scheduler.EnqueueAsync(new(orderId), cancellationToken);
 JobHandle later = await scheduler.ScheduleAsync(
     new(orderId), TimeSpan.FromMinutes(10), cancellationToken);
-JobHandle exact = await scheduler.ScheduleAtAsync(
+JobHandle exact = await scheduler.ScheduleAsync(
     new(orderId), runAt, cancellationToken);
 ```
 
 These calls report that persistence succeeded, not that the job ran. Their
 cancellation token cancels only the storage operation. `JobHandle` is an opaque
-durable identity suitable for dependencies and monitoring.
+durable identity suitable for dependencies and monitoring. Its `Value` property
+contains the raw string for an HTTP, database, or message boundary. Convert an
+incoming string with `JobHandle.FromString`.
 
 Fair overloads accept a group ID for round-robin acquisition across active
 groups. Enable fair queues from the registration builder and use a provider that
@@ -24,6 +26,10 @@ services.AddMyAppJobs()
 	.UseFairQueues()
 	.ConfigureStorage(storage => storage.UseInMemory());
 ```
+
+`UseFairQueues` also accepts an `OptionsBuilder<FairQueueOptions>` callback. Bind
+it to `IConfiguration` when fairness settings belong to host configuration, and
+ensure a bound `Enabled` value remains `true`.
 
 Whitespace normalizes to no group and identifiers longer than 128 characters
 are rejected. Redis does not implement fair acquisition.

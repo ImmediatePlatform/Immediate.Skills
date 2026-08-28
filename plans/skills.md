@@ -55,6 +55,17 @@ can be restored and forward-tested.
   still disables implicit invocation.
 - The activation matrix now covers all 31 repository skills with the same five prompt categories.
 
+## Implementation update, 2026-08-28
+
+- Immediate.Jobs guidance is synchronized through merged source commit
+  `32b7b8141e46b4c04dcd3177747ad045709bc5b2`.
+- The Jobs skills now use the payload-first scheduler, typed continuation handles, unified monitor,
+  dashboard options builder, capturing storage harness, and current handle member names.
+- Worker, fair-queue, dashboard, and Redis guidance records both direct options configuration and
+  `IConfiguration` binding.
+- The Jobs plugin version is `0.1.0-preview.3`. It remains `NOT_AVAILABLE`, and every skill still
+  disables implicit invocation.
+
 ## Naming and packaging
 
 Use the conceptual namespace `$immediate.<area>:<subskill>`. Codex's actual

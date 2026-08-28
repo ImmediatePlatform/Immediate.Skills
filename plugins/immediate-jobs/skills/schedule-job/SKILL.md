@@ -13,10 +13,10 @@ Persist work through the generated typed scheduler and preserve scope, timing, a
 2. Inspect the target job's generated scheduler, request type, queue, context extractors, and caller lifetime.
 3. Read [scheduling-patterns.md](references/scheduling-patterns.md).
 4. Inject `JobName.Scheduler` into scoped or transient callers. Create a service scope before resolving it from singleton code.
-5. Choose enqueue, relative delay, or absolute instant based on the actual requirement; pass cancellation only for persistence of the scheduling operation.
+5. Call `EnqueueAsync(payload, ...)` for immediate work. Use the unified `ScheduleAsync(payload, delayOrTime, ...)` overloads for a relative delay or absolute instant. Pass cancellation only for persistence of the scheduling operation.
 6. Add a fair-group ID only when ordering by tenant or key is required and the configured provider supports fair acquisition.
 7. Use the NodaTime companion package and registration before selecting `Duration` or `Instant` overloads.
-8. Treat the returned `JobHandle` as opaque and distinguish successful persistence from successful execution. When cancellation is required, call `CancelAsync` on the same generated scheduler.
+8. Treat the returned `JobHandle` as opaque and distinguish successful persistence from successful execution. Read its `Value` only at a string boundary. When cancellation is required, call `CancelAsync` on the same generated scheduler.
 9. Test the persisted schedule, timing boundary, group normalization, caller scope, and cancellation state where applicable.
 
 ## Guardrails

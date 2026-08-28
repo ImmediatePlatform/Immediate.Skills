@@ -27,6 +27,10 @@ interfaces, abstract members, and unsupported collection graphs. A job name is
 part of the stored data, not display text. Set it explicitly before production
 and do not reuse it for a different payload shape.
 
+A request that implements `IJobRequest` receives `JobDetails` during execution.
+Its typed identifiers are `JobHandle` and optional `BatchHandle`. Read their
+`Value` only when an idempotency store or another boundary requires a string.
+
 Default policies are three attempts, no timeout, unlimited job-level
 concurrency, exponential jittered backoff with a five-second base, and overlap
 skip. Select overrides from application requirements rather than copying them.
@@ -46,6 +50,10 @@ registration call. Align tags across handlers and jobs. The generated scheduler
 is scoped, the runtime is singleton, and each attempt receives a fresh scope.
 Repeated generated registration does not add another worker or duplicate job
 descriptors, but storage may be configured only once.
+
+`ConfigureWorkers` accepts a direct `ImmediateJobsOptions` callback or an
+`OptionsBuilder<ImmediateJobsOptions>` callback. The latter can call `Bind` with
+an `IConfiguration` section or `BindConfiguration` with a section path.
 
 ## Sources
 

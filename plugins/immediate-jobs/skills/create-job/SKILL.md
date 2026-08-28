@@ -16,7 +16,7 @@ Create durable background work without accidentally changing its persisted contr
 5. Put the request first and `CancellationToken` last. Use `EmptyJobRequest` only for payloadless work.
 6. Give production jobs an explicit stable `Name`; treat payload shape, job name, context extractor keys, and queue name as persisted schema.
 7. Select retry, timeout, concurrency, backoff, overlap, and queue policies deliberately. Make the handler idempotent for at-least-once delivery.
-8. Import the project's root namespace. Register handlers and generated `AddXxxJobs(tags)` with the same tags, then configure runtime and storage from the returned builder. Handler registration adds the needed concrete behavior dependencies. Run the full host so workers execute.
+8. Import the project's root namespace. Register handlers and generated `AddXxxJobs(tags)` with the same tags, then configure workers and storage from the returned `IImmediateJobsBuilder`. Bind worker options from `IConfiguration` when the host owns those settings. Handler registration adds the needed concrete behavior dependencies. Run the full host so workers execute.
 9. Build and add a deterministic test that covers success plus the important retry or idempotency path.
 
 ## Guardrails
