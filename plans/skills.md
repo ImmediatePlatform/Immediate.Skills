@@ -14,8 +14,8 @@ main extensibility points developers need once an application grows:
 handler -> validation -> API endpoint -> cache -> service registration
 ```
 
-Immediate.Jobs should follow as a separately versioned preview area because its
-documentation currently describes unreleased APIs that may still change.
+Immediate.Jobs follows as a separately versioned area. The current skills target
+the published Immediate.Jobs 0.5.0 packages.
 
 ## Implementation status — 2026-07-30
 
@@ -65,6 +65,15 @@ can be restored and forward-tested.
   `IConfiguration` binding.
 - The Jobs plugin version is `0.1.0-preview.3`. It remains `NOT_AVAILABLE`, and every skill still
   disables implicit invocation.
+
+## Implementation update, 2026-08-29
+
+- Immediate.Jobs 0.5.0 is published on NuGet as a non-prerelease package set.
+- The Jobs plugin version is `0.1.0`, and its marketplace entry is `AVAILABLE`.
+- Preview labels and explicit-only policies are removed from all eight skills, so they use normal
+  automatic discovery.
+- Package compatibility checks remain because core, provider, dashboard, NodaTime, and testing
+  packages must still use compatible versions.
 
 ## Naming and packaging
 
@@ -400,13 +409,13 @@ should handle common diagnostics for the workflow they own, while
 `diagnose-generation` handles cross-package or unclear failures. Split out a
 package diagnostic skill later only if real usage shows a distinct trigger.
 
-## Preview release: Immediate.Jobs
+## Immediate.Jobs release
 
-Keep the Jobs plugin `NOT_AVAILABLE` until the first skill is implemented and
-tested against the version of Immediate.Jobs that users can actually restore.
-Mark all initial skill metadata and instructions as preview-sensitive.
+The Jobs plugin is available after all eight skills were implemented and tested
+against the restorable Immediate.Jobs 0.5.0 packages. Keep its package version
+checks because companion packages and providers must remain compatible.
 
-Implement Jobs in this order:
+The Jobs skills were implemented in this order:
 
 | Order | Skill | Goal | Primary docs |
 | --- | --- | --- | --- |
@@ -468,7 +477,7 @@ Use this authoring contract:
 6. Inspect the target project's framework, package versions, generated method
    names, nullable settings, and existing patterns before making changes.
 7. Treat the checked-out application's code and installed package version as
-   authoritative when they differ from preview or latest documentation. Call
+   authoritative when they differ from prerelease or newer documentation. Call
    out the mismatch instead of silently writing incompatible code.
 8. Verify edits with the narrowest relevant build or tests. Analyzer warnings
    and generated-code failures are part of the result, not incidental output.
@@ -493,7 +502,8 @@ A skill is ready only when all of these pass:
    structural or metadata change.
 7. **Publishing:** Increment only the affected plugin's semantic version. Mark
    that marketplace entry `AVAILABLE` only after it contains at least one
-   complete skill. A preview Jobs plugin should remain independently gated.
+   complete skill. Gate any plugin whose documented package baseline cannot be
+   restored.
 8. **Package isolation:** Test each package plugin with no other Immediate
    plugin installed. Its skills may recognize related application code, but
    must not depend on another plugin's instructions or bundled references.
@@ -528,8 +538,8 @@ not own an endpoint-only request.
    changed fixture.
 10. Publish only the stable plugins that pass their individual release gates.
 11. Add post-v0.1 skills based on observed demand.
-12. Start the Jobs preview plugin only when its restorable package/API baseline
-   is known, beginning with `create-job`, `schedule-job`, and `test-job`.
+12. Publish the Jobs plugin after its 0.5.0 package and API baseline restores
+   and the representative workflows pass their release checks.
 
 ## Source baseline
 

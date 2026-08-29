@@ -1,6 +1,4 @@
 interface:
-  display_name: "Test Immediate job (Preview)"
-  short_description: "Preview: test jobs deterministically"
-  default_prompt: "Use $immediate-jobs:test-job against a verified Immediate.Jobs preview baseline to test jobs deterministically."
-policy:
-  allow_implicit_invocation: false
+  display_name: "Test Immediate job"
+  short_description: "Test jobs deterministically"
+  default_prompt: "Use $immediate-jobs:test-job to test jobs deterministically."

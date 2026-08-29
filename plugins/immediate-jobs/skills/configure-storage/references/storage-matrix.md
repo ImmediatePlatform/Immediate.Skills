@@ -57,7 +57,7 @@ scheduler starts. The health check and worker use the same validated options; no
 extra options registration is required.
 
 Provider initialization is idempotent startup, not production migration. Keep
-provider and core packages on the same preview revision. A custom provider starts
+provider and core packages on compatible versions. A custom provider starts
 with `IJobStorage`. Add `IRecurringJobStorage`, `IJobGraphStorage`,
 `IFairQueueStorage`, or `IJobStorageReplica` only when every method follows that
 interface's rules. Test the public DI registration with

@@ -1,6 +1,6 @@
 ---
 name: schedule-job
-description: Enqueue or schedule an Immediate.Jobs job through its generated scoped Scheduler, including delayed and absolute execution, queue selection, fair-group dispatch, and NodaTime overloads. Use only with a verified restorable Immediate.Jobs preview package set; do not apply this preview API from memory.
+description: Enqueue or schedule an Immediate.Jobs job through its generated scoped Scheduler, including delayed and absolute execution, queue selection, fair-group dispatch, and NodaTime overloads.
 ---
 
 # Schedule an Immediate job
@@ -9,7 +9,7 @@ Persist work through the generated typed scheduler and preserve scope, timing, a
 
 ## Workflow
 
-1. Verify the exact Immediate.Jobs preview baseline and provider capabilities in the target solution.
+1. Verify the installed Immediate.Jobs package versions and provider capabilities in the target solution.
 2. Inspect the target job's generated scheduler, request type, queue, context extractors, and caller lifetime.
 3. Read [scheduling-patterns.md](references/scheduling-patterns.md).
 4. Inject `JobName.Scheduler` into scoped or transient callers. Create a service scope before resolving it from singleton code.
@@ -25,7 +25,7 @@ Persist work through the generated typed scheduler and preserve scope, timing, a
 - Do not claim `CancelAsync` forcibly stops handler code already running. It stores the cancellation and prevents a later result from replacing it.
 - Do not resolve a generated scheduler directly from a singleton root provider; context capture may require scoped services.
 - Do not use fair groups with Redis or without enabling fair queues. Group IDs are limited to 128 characters; whitespace means no group.
-- Do not mix NodaTime payloads or overloads into a host that lacks the matching preview companion registration.
+- Do not mix NodaTime payloads or overloads into a host that lacks the matching companion package and registration.
 
 ## Handoff
 

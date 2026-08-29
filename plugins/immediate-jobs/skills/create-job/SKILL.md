@@ -1,6 +1,6 @@
 ---
 name: create-job
-description: Create or update an Immediate.Jobs background job with a source-generated handler, persisted payload contract, stable job identity, execution policy, queue assignment, and host registration. Use only against a verified restorable Immediate.Jobs preview baseline; the package and this skill are not yet stable.
+description: Create or update an Immediate.Jobs background job with a source-generated handler, persisted payload contract, stable job identity, execution policy, queue assignment, and host registration.
 ---
 
 # Create an Immediate job
@@ -9,7 +9,7 @@ Create durable background work without accidentally changing its persisted contr
 
 ## Workflow
 
-1. Verify that the solution restores a mutually compatible Immediate.Jobs preview package set. Stop and explain the preview dependency if it does not.
+1. Verify that the solution restores a mutually compatible Immediate.Jobs package set.
 2. Inspect nearby handlers, job names, queues, tags, payload conventions, idempotency strategy, and registration code.
 3. Read [job-contract.md](references/job-contract.md).
 4. Add `[Handler, Job]` to a non-nested `partial` class with exactly one private instance `HandleAsync` method returning non-generic `ValueTask`.
@@ -29,4 +29,4 @@ Create durable background work without accidentally changing its persisted contr
 
 ## Handoff
 
-Report the preview package versions, persisted name and payload, queue/policy choices, idempotency boundary, registration path, and test evidence.
+Report the package versions, persisted name and payload, queue/policy choices, idempotency boundary, registration path, and test evidence.

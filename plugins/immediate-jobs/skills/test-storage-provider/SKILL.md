@@ -10,7 +10,7 @@ can use any test framework or provider implementation.
 
 ## Workflow
 
-1. Verify that `Immediate.Jobs.Testing`, core, and provider packages restore at one compatible preview revision.
+1. Verify that `Immediate.Jobs.Testing`, core, and provider packages restore at compatible versions.
 2. Inspect the provider's normal public DI registration and the capability interfaces implemented by the resolved storage.
 3. Read [conformance-suite.md](references/conformance-suite.md).
 4. Declare one exact `StorageCapabilities` set. Include `Queue`. Add `Recurring`, `Graph`, `FairQueues`, or `Replica` only when the resolved type implements the matching public interface.
