@@ -1,7 +1,7 @@
 {
   "name": "immediate-jobs",
-  "version": "0.1.0-preview.3",
-  "description": "Preview workflows for building and operating background jobs with Immediate.Jobs.",
+  "version": "0.1.0",
+  "description": "Focused workflows for building and operating background jobs with Immediate.Jobs.",
   "author": {
     "name": "ImmediatePlatform",
     "url": "https://github.com/ImmediatePlatform"
@@ -12,9 +12,9 @@
   "keywords": ["dotnet", "immediate-jobs", "background-jobs", "agent-skills"],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Immediate.Jobs (Preview)",
+    "displayName": "Immediate.Jobs",
     "shortDescription": "Build and operate generated background jobs.",
-    "longDescription": "Preview workflows for creating, scheduling, testing, storing, composing, and operating Immediate.Jobs.",
+    "longDescription": "Create, schedule, test, store, compose, and operate Immediate.Jobs with focused application-development workflows.",
     "developerName": "ImmediatePlatform",
     "category": "Developer Tools",
     "capabilities": [],

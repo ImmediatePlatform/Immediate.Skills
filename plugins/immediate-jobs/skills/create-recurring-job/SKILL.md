@@ -1,6 +1,6 @@
 ---
 name: create-recurring-job
-description: Create declarative or dynamic Immediate.Jobs recurring schedules and trigger payloadless jobs by type or stable name. Use for Cron, IANA time zones, startup reconciliation, overlap policy, or NodaTime APIs after verifying compatible preview packages.
+description: Create declarative or dynamic Immediate.Jobs recurring schedules and trigger payloadless jobs by type or stable name. Use for Cron, IANA time zones, startup reconciliation, overlap policy, or NodaTime APIs.
 ---
 
 # Create an Immediate recurring job
@@ -9,7 +9,7 @@ Define repeatable schedules while keeping persisted identity, reconciliation, an
 
 ## Workflow
 
-1. Verify the checked-out Immediate.Jobs preview versions and the intended provider's recurring capability.
+1. Verify compatible Immediate.Jobs package versions and the intended provider's recurring capability.
 2. Confirm that the job is payloadless. If each occurrence needs data, have it load current data by stable identifiers or reconsider the design.
 3. Read [recurring-patterns.md](references/recurring-patterns.md).
 4. Use code-defined Cron metadata for deployment-owned schedules and the generated typed scheduler for application-managed schedules. The scheduler persists its generated queue name with each schedule. Use the root-namespace `RecurringJobs` dispatcher when infrastructure must trigger a payloadless job by stable name.
@@ -30,4 +30,4 @@ Define repeatable schedules while keeping persisted identity, reconciliation, an
 
 ## Handoff
 
-Report the applicable items: ownership mode, stable name, host tags, Cron and time zone, overlap policy, reconciliation consequences, provider support, preview revisions, and deterministic test evidence.
+Report the applicable items: ownership mode, stable name, host tags, Cron and time zone, overlap policy, reconciliation consequences, provider support, package versions, and deterministic test evidence.

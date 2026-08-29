@@ -24,10 +24,9 @@ plugins/
 scripts/validate.py
 ```
 
-The stable packages are separate plugins so teams can install only the
-Immediate libraries they use. `immediate-platform` contains cross-package
-workflows. `immediate-jobs` is independently versioned and remains unavailable
-while Immediate.Jobs itself is an unreleased preview.
+The packages are separate plugins so teams can install only the Immediate
+libraries they use. `immediate-platform` contains cross-package workflows, and
+`immediate-jobs` follows the independently versioned Immediate.Jobs releases.
 
 ## Install
 
@@ -40,6 +39,7 @@ codex plugin add immediate-apis@immediate
 codex plugin add immediate-validations@immediate
 codex plugin add immediate-cache@immediate
 codex plugin add immediate-injections@immediate
+codex plugin add immediate-jobs@immediate
 codex plugin add immediate-platform@immediate
 ```
 

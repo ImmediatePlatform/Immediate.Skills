@@ -1,6 +1,6 @@
 ---
 name: test-job
-description: Test Immediate.Jobs declarations, scheduling, cancellation, retries, timing, context, recurring work, and workflow graphs with the preview harness and captured storage writes. Use test-storage-provider for custom storage.
+description: Test Immediate.Jobs declarations, scheduling, cancellation, retries, timing, context, recurring work, and workflow graphs with the testing harness and captured storage writes. Use test-storage-provider for custom storage.
 ---
 
 # Test an Immediate job
@@ -9,7 +9,7 @@ Prove persisted and execution behavior without relying on real time or a live wo
 
 ## Workflow
 
-1. Verify that `Immediate.Jobs.Testing` matches the restored core preview revision.
+1. Verify that `Immediate.Jobs.Testing` is compatible with the restored core package.
 2. Identify whether the test needs full pipeline execution or only inspection of captured storage writes.
 3. Read [testing-patterns.md](references/testing-patterns.md).
 4. Configure `JobTestHarness` with the same generated handler/job registration and required dependencies as production, but do not call `ConfigureStorage`; the harness installs in-memory storage and fake time. Create an async service scope before resolving a generated scheduler because schedulers are scoped and the harness validates scopes.
@@ -24,7 +24,7 @@ Prove persisted and execution behavior without relying on real time or a live wo
 - Do not use `Task.Delay`, wall-clock sleeps, or timing races when fake time can drive the runtime deterministically.
 - Do not substitute direct handler invocation when the behavior pipeline, serialization, restored context, or retry boundary is under test.
 - Do not mistake a captured storage write for proof that a worker can deserialize and execute it.
-- Do not combine mismatched preview revisions of core, providers, and testing helpers.
+- Do not combine incompatible versions of core, providers, and testing helpers.
 - Do not use this workflow to claim a custom `IJobStorage` is correct; use `$immediate-jobs:test-storage-provider` and its packaged conformance cases.
 
 ## Handoff

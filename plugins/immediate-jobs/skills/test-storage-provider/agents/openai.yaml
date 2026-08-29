@@ -1,6 +1,4 @@
 interface:
-  display_name: "Test job storage (Preview)"
-  short_description: "Preview: test custom job storage providers"
-  default_prompt: "Use $immediate-jobs:test-storage-provider against a verified Immediate.Jobs preview baseline to test a custom storage provider."
-policy:
-  allow_implicit_invocation: false
+  display_name: "Test job storage"
+  short_description: "Test custom job storage providers"
+  default_prompt: "Use $immediate-jobs:test-storage-provider to test a custom storage provider."

@@ -161,18 +161,18 @@
     "edge": "Trace an assembly identifier collision through generated hint names, OpenAPI IDs, and DI methods."
   },
   "immediate-jobs:create-job": {
-    "direct": "Use $immediate-jobs:create-job to add an idempotent receipt job on the verified preview.",
+    "direct": "Use $immediate-jobs:create-job to add an idempotent receipt job with Immediate.Jobs 0.5.0.",
     "indirect": "Persist this background command with a stable name, retry policy, and generated scheduler.",
     "incomplete": "Create a background job.",
     "negative": "Schedule an already declared job ten minutes from now.",
-    "edge": "Create a payloadless job and explain registration plus at-least-once side effects when preview packages do not restore."
+    "edge": "Create a payloadless job and explain registration plus at-least-once side effects when package versions do not match."
   },
   "immediate-jobs:schedule-job": {
     "direct": "Use $immediate-jobs:schedule-job to enqueue this job in a tenant fair group.",
     "indirect": "Persist existing typed background work for an absolute instant from a scoped caller.",
     "incomplete": "Run this job later.",
     "negative": "Declare the job handler and its retry policy.",
-    "edge": "Schedule from a singleton with NodaTime while checking Redis fair-group limitations and preview compatibility."
+    "edge": "Schedule from a singleton with NodaTime while checking Redis fair-group limitations and package compatibility."
   },
   "immediate-jobs:test-job": {
     "direct": "Use $immediate-jobs:test-job to test retries with fake time.",
@@ -207,7 +207,7 @@
     "indirect": "Choose durable job topology with graph support and application-owned migrations.",
     "incomplete": "Set up job storage.",
     "negative": "Add OpenTelemetry metrics for existing workers.",
-    "edge": "Compare Redis and SQL for batches and fair queues while detecting mismatched preview provider versions."
+    "edge": "Compare Redis and SQL for batches and fair queues while detecting mismatched provider versions."
   },
   "immediate-jobs:operate-jobs": {
     "direct": "Use $immediate-jobs:operate-jobs to secure the dashboard and add health checks.",

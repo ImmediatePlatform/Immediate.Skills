@@ -1,6 +1,6 @@
 ---
 name: configure-storage
-description: Configure Immediate.Jobs in-memory, Entity Framework Core, LinqToDB, Redis, or custom storage through the fluent builder. Use when choosing process mode, supported features, schema ownership, or lifecycle. Requires compatible preview packages.
+description: Configure Immediate.Jobs in-memory, Entity Framework Core, LinqToDB, Redis, or custom storage through the fluent builder. Use when choosing process mode, supported features, schema ownership, or lifecycle. Requires compatible package versions.
 ---
 
 # Configure Immediate job storage
@@ -9,7 +9,7 @@ Choose durability and capabilities together, then make schema and connection own
 
 ## Workflow
 
-1. Verify that every Immediate.Jobs core, provider, dashboard, NodaTime, and testing package restores at the same compatible preview revision.
+1. Verify that every Immediate.Jobs core, provider, dashboard, NodaTime, and testing package uses a compatible version.
 2. Determine durability, process count, failover, graph, recurring, and fair-queue requirements.
 3. Read [storage-matrix.md](references/storage-matrix.md).
 4. Choose in-memory for disposable single-process work, single-server SQL for one durable process, distributed SQL for scale-out/full capabilities, or Redis for distributed queue and recurring work without graphs or fair groups.
@@ -18,7 +18,7 @@ Choose durability and capabilities together, then make schema and connection own
 7. For Redis, decide connection ownership, database, and key prefix; avoid braces in the prefix. Configure options directly or bind `RedisJobStorageOptions` from `IConfiguration`.
 8. Chain `AddHealthCheck` and map a tag-filtered readiness endpoint. Exercise provider initialization and the required capability, not just connectivity.
 9. For a custom provider, use `$immediate-jobs:test-storage-provider` to run the packaged tests that match its supported features.
-10. Document migration, rollback, backup, and preview upgrade ownership.
+10. Document migration, rollback, backup, and package upgrade ownership.
 
 ## Guardrails
 

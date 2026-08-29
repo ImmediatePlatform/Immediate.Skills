@@ -1,6 +1,6 @@
 ---
 name: operate-jobs
-description: Secure, monitor, and operate Immediate.Jobs with the dashboard, programmatic monitors, OpenTelemetry, structured logs, health checks, retry and recurring controls, and batch graph actions. Use only after verifying the complete preview package and provider baseline.
+description: Secure, monitor, and operate Immediate.Jobs with the dashboard, programmatic monitors, OpenTelemetry, structured logs, health checks, retry and recurring controls, and batch graph actions.
 ---
 
 # Operate Immediate jobs
@@ -9,7 +9,7 @@ Expose enough operational control to diagnose work without leaking payloads or o
 
 ## Workflow
 
-1. Verify compatible Jobs, provider, and dashboard preview revisions plus the storage capabilities in use.
+1. Verify compatible Jobs, provider, and dashboard package versions plus the storage capabilities in use.
 2. Identify operators, sensitive payload/error fields, authorization policy, telemetry destinations, retention, and incident actions.
 3. Read [operations-patterns.md](references/operations-patterns.md).
 4. Chain `AddImmediateJobsDashboard` from generated job registration, configure it directly or bind its `OptionsBuilder<T>` callback to `IConfiguration` before building the app, and map it under an operator-only path with a named authorization policy. Protect every UI, JSON, SSE, retry, run-now, cancel, delete, pause, trigger, and graph action.
@@ -28,4 +28,4 @@ Expose enough operational control to diagnose work without leaking payloads or o
 
 ## Handoff
 
-Report the authorization policy, mapped prefix, exposed controls, telemetry exporters/links, health semantics, sensitive-data treatment, provider limitations, preview revisions, and tests.
+Report the authorization policy, mapped prefix, exposed controls, telemetry exporters/links, health semantics, sensitive-data treatment, provider limitations, package versions, and tests.

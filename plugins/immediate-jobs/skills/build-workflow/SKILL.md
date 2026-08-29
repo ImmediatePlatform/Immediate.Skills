@@ -1,6 +1,6 @@
 ---
 name: build-workflow
-description: Build Immediate.Jobs atomic batches, durable continuations, fan-out and fan-in graphs, delayed release, and runtime expansion. Use only with a verified SQL or in-memory graph-capable preview provider; Redis cannot execute these workflows.
+description: Build Immediate.Jobs atomic batches, durable continuations, fan-out and fan-in graphs, delayed release, and runtime expansion. Use only with a SQL or in-memory graph-capable provider; Redis cannot execute these workflows.
 ---
 
 # Build an Immediate job workflow
@@ -9,7 +9,7 @@ Persist dependency graphs atomically and make their failure and expansion behavi
 
 ## Workflow
 
-1. Verify the core/provider preview revisions and confirm `IJobGraphStorage` capability. Stop if the target uses Redis.
+1. Verify compatible core and provider package versions and confirm `IJobGraphStorage` capability. Stop if the target uses Redis.
 2. Model the graph, continuation triggers, post-release delays, idempotency keys, and expected cascade behavior before writing scheduling code. Decide which jobs must share the atomic batch write and which may be attached later as a separate durable continuation.
 3. Read [workflow-graphs.md](references/workflow-graphs.md).
 4. Import `Immediate.Jobs.Shared.Interfaces` and resolve scoped `IBatchScheduler` plus each generated job scheduler.
@@ -30,4 +30,4 @@ Persist dependency graphs atomically and make their failure and expansion behavi
 
 ## Handoff
 
-Report provider capability, graph shape, continuation triggers and delays, commit/idempotency strategy, runtime expansion semantics, monitoring path, preview versions, and test evidence.
+Report provider capability, graph shape, continuation triggers and delays, commit/idempotency strategy, runtime expansion semantics, monitoring path, package versions, and test evidence.
