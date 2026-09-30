@@ -1,0 +1,13 @@
+{
+  "name": "immediate-injections",
+  "version": "0.1.0",
+  "description": "Focused workflows for source-generated dependency injection with Immediate.Injections.",
+  "author": {
+    "name": "ImmediatePlatform",
+    "url": "https://github.com/ImmediatePlatform"
+  },
+  "homepage": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "repository": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "license": "MIT",
+  "keywords": ["dotnet", "immediate-injections", "dependency-injection", "agent-skills"]
+}

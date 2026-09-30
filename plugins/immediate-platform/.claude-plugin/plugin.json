@@ -1,0 +1,13 @@
+{
+  "name": "immediate-platform",
+  "version": "0.1.1",
+  "description": "Team workflows for building applications with the Immediate.Platform libraries.",
+  "author": {
+    "name": "ImmediatePlatform",
+    "url": "https://github.com/ImmediatePlatform"
+  },
+  "homepage": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "repository": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "license": "MIT",
+  "keywords": ["dotnet", "immediate-platform", "agent-skills"]
+}

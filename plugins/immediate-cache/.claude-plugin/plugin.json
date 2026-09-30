@@ -1,0 +1,13 @@
+{
+  "name": "immediate-cache",
+  "version": "0.1.0",
+  "description": "Focused workflows for generated handler caching with Immediate.Cache.",
+  "author": {
+    "name": "ImmediatePlatform",
+    "url": "https://github.com/ImmediatePlatform"
+  },
+  "homepage": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "repository": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "license": "MIT",
+  "keywords": ["dotnet", "immediate-cache", "caching", "agent-skills"]
+}
