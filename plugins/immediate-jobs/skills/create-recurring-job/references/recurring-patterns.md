@@ -26,7 +26,11 @@ public sealed partial class RebuildSearchIndex
 - the macros `@yearly`/`@annually`, `@monthly`, `@weekly`, `@daily`/`@midnight`,
   and `@hourly`;
 - an RFC 5545 recurrence-rule body, such as
-  `FREQ=WEEKLY;BYDAY=MO;BYHOUR=6;BYMINUTE=0`.
+  `FREQ=WEEKLY;BYDAY=MO;BYHOUR=6;BYMINUTE=0;BYSECOND=0`.
+
+Always set `BYHOUR`, `BYMINUTE`, and `BYSECOND` in a rule: an omitted part, and
+the start of an `INTERVAL`, come from the time the schedule is saved. Numeric
+cron day-of-week values use `0` for Sunday (Quartz uses `1`); prefer day names.
 
 A recurrence rule must repeat forever: `COUNT` or `UNTIL` is analyzer error
 `IJOB0007` on `[Job]` and throws `ImmediateJobException` when a dynamic schedule
