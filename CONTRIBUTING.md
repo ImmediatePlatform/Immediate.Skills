@@ -22,9 +22,12 @@ library source repository.
 
 1. Ensure every changed skill and its package-isolation checks are ready for
    team use.
-2. Increment only the affected plugin manifest using semantic versioning.
+2. Increment only the affected plugin's version using semantic versioning, in
+   both `.codex-plugin/plugin.json` and `.claude-plugin/plugin.json`.
 3. Change that marketplace entry from `NOT_AVAILABLE` to `AVAILABLE` only when
-   its release gate passes. Keep preview plugins independently gated.
+   its release gate passes, and add it to `.claude-plugin/marketplace.json` at
+   the same time. Keep preview plugins independently gated and out of the Claude
+   Code marketplace.
 4. Run `python3 scripts/validate.py`.
 5. Merge the change and create a matching Git tag when a stable version should
    be pinned by consumers.

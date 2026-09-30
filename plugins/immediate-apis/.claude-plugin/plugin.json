@@ -1,0 +1,13 @@
+{
+  "name": "immediate-apis",
+  "version": "0.1.0",
+  "description": "Focused workflows for exposing Immediate.Handlers through Immediate.Apis.",
+  "author": {
+    "name": "ImmediatePlatform",
+    "url": "https://github.com/ImmediatePlatform"
+  },
+  "homepage": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "repository": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "license": "MIT",
+  "keywords": ["dotnet", "immediate-apis", "minimal-api", "agent-skills"]
+}

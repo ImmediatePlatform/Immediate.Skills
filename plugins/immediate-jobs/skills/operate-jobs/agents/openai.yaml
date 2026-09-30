@@ -1,6 +1,4 @@
 interface:
-  display_name: "Operate Immediate jobs (Preview)"
-  short_description: "Preview: monitor and operate background jobs"
-  default_prompt: "Use $immediate-jobs:operate-jobs against a verified Immediate.Jobs preview baseline to monitor and operate jobs."
-policy:
-  allow_implicit_invocation: false
+  display_name: "Operate Immediate jobs"
+  short_description: "Monitor and operate background jobs"
+  default_prompt: "Use $immediate-jobs:operate-jobs to monitor and operate background jobs."

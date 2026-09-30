@@ -1,0 +1,13 @@
+{
+  "name": "immediate-jobs",
+  "version": "0.2.0",
+  "description": "Focused workflows for building and operating background jobs with Immediate.Jobs.",
+  "author": {
+    "name": "ImmediatePlatform",
+    "url": "https://github.com/ImmediatePlatform"
+  },
+  "homepage": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "repository": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "license": "MIT",
+  "keywords": ["dotnet", "immediate-jobs", "background-jobs", "agent-skills"]
+}

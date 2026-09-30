@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test job storage"
+  short_description: "Test custom job storage providers"
+  default_prompt: "Use $immediate-jobs:test-storage-provider to test a custom storage provider."

@@ -33,8 +33,9 @@ Endpoint group tags flow downward. An unmatched tagged group skips its subtree;
 matched groups still allow endpoint-level filtering. Handler tags must align
 with endpoint tags or mapped endpoints may fail DI resolution.
 
-Behaviors are not tag-filtered. Preview job queue definitions are assembly-wide;
-selected jobs still require matching handler registration.
+Behaviors are not tag-filtered. Job queue settings travel with each selected job,
+so a host only polls the queues its selected jobs use; selected jobs still
+require matching handler registration.
 
 ## Sources
 

@@ -14,8 +14,8 @@ main extensibility points developers need once an application grows:
 handler -> validation -> API endpoint -> cache -> service registration
 ```
 
-Immediate.Jobs should follow as a separately versioned preview area because its
-documentation currently describes unreleased APIs that may still change.
+Immediate.Jobs follows as a separately versioned area. The current skills target
+the published Immediate.Jobs 0.5.0 packages.
 
 ## Implementation status — 2026-07-30
 
@@ -44,6 +44,36 @@ and the official NuGet flat-container endpoint
 on 2026-07-30. The preview guidance is therefore authored from the checked-out
 source/docs but is not offered for installation until a compatible package set
 can be restored and forward-tested.
+
+## Implementation update — 2026-08-12
+
+- Immediate.Jobs guidance is synchronized through source commit
+  `ee5f51d86e0056146f3955d0aeea80597ed86ccb`.
+- The plugin now contains eight skills. `test-storage-provider` covers the packaged storage checks,
+  while `test-job` remains focused on application jobs.
+- The Jobs plugin version is `0.1.0-preview.2`. It remains `NOT_AVAILABLE`, and every preview skill
+  still disables implicit invocation.
+- The activation matrix now covers all 31 repository skills with the same five prompt categories.
+
+## Implementation update, 2026-08-28
+
+- Immediate.Jobs guidance is synchronized through merged source commit
+  `32b7b8141e46b4c04dcd3177747ad045709bc5b2`.
+- The Jobs skills now use the payload-first scheduler, typed continuation handles, unified monitor,
+  dashboard options builder, capturing storage harness, and current handle member names.
+- Worker, fair-queue, dashboard, and Redis guidance records both direct options configuration and
+  `IConfiguration` binding.
+- The Jobs plugin version is `0.1.0-preview.3`. It remains `NOT_AVAILABLE`, and every skill still
+  disables implicit invocation.
+
+## Implementation update, 2026-08-29
+
+- Immediate.Jobs 0.5.0 is published on NuGet as a non-prerelease package set.
+- The Jobs plugin version is `0.1.0`, and its marketplace entry is `AVAILABLE`.
+- Preview labels and explicit-only policies are removed from all eight skills, so they use normal
+  automatic discovery.
+- Package compatibility checks remain because core, provider, dashboard, NodaTime, and testing
+  packages must still use compatible versions.
 
 ## Naming and packaging
 
@@ -379,13 +409,13 @@ should handle common diagnostics for the workflow they own, while
 `diagnose-generation` handles cross-package or unclear failures. Split out a
 package diagnostic skill later only if real usage shows a distinct trigger.
 
-## Preview release: Immediate.Jobs
+## Immediate.Jobs release
 
-Keep the Jobs plugin `NOT_AVAILABLE` until the first skill is implemented and
-tested against the version of Immediate.Jobs that users can actually restore.
-Mark all initial skill metadata and instructions as preview-sensitive.
+The Jobs plugin is available after all eight skills were implemented and tested
+against the restorable Immediate.Jobs 0.5.0 packages. Keep its package version
+checks because companion packages and providers must remain compatible.
 
-Implement Jobs in this order:
+The Jobs skills were implemented in this order:
 
 | Order | Skill | Goal | Primary docs |
 | --- | --- | --- | --- |
@@ -396,6 +426,7 @@ Implement Jobs in this order:
 | 5 | `$immediate-jobs:build-workflow` | Build atomic batches, continuations, chains, fan-out/fan-in, and dynamic expansion. | `batches-and-continuations` |
 | 6 | `$immediate-jobs:configure-storage` | Choose and configure in-memory, EF Core, LinqToDB, or Redis storage with clear capability tradeoffs. | `choosing-storage`, `configuring-storage-providers` |
 | 7 | `$immediate-jobs:operate-jobs` | Secure monitoring, add observability and health checks, and reason about worker lifecycle and delivery guarantees. | `dashboard-and-monitoring`, `observability-and-health`, `delivery-guarantees` |
+| 8 | `$immediate-jobs:test-storage-provider` | Run the public storage checks against an isolated custom-provider fixture. | `testing-jobs`, `choosing-storage`, `api-reference` |
 
 `create-job` must explicitly guard the two most consequential pitfalls from the
 docs: Jobs registration does not replace Handlers registration, and delivery is
@@ -446,7 +477,7 @@ Use this authoring contract:
 6. Inspect the target project's framework, package versions, generated method
    names, nullable settings, and existing patterns before making changes.
 7. Treat the checked-out application's code and installed package version as
-   authoritative when they differ from preview or latest documentation. Call
+   authoritative when they differ from prerelease or newer documentation. Call
    out the mismatch instead of silently writing incompatible code.
 8. Verify edits with the narrowest relevant build or tests. Analyzer warnings
    and generated-code failures are part of the result, not incidental output.
@@ -471,7 +502,8 @@ A skill is ready only when all of these pass:
    structural or metadata change.
 7. **Publishing:** Increment only the affected plugin's semantic version. Mark
    that marketplace entry `AVAILABLE` only after it contains at least one
-   complete skill. A preview Jobs plugin should remain independently gated.
+   complete skill. Gate any plugin whose documented package baseline cannot be
+   restored.
 8. **Package isolation:** Test each package plugin with no other Immediate
    plugin installed. Its skills may recognize related application code, but
    must not depend on another plugin's instructions or bundled references.
@@ -506,8 +538,8 @@ not own an endpoint-only request.
    changed fixture.
 10. Publish only the stable plugins that pass their individual release gates.
 11. Add post-v0.1 skills based on observed demand.
-12. Start the Jobs preview plugin only when its restorable package/API baseline
-   is known, beginning with `create-job`, `schedule-job`, and `test-job`.
+12. Publish the Jobs plugin after its 0.5.0 package and API baseline restores
+   and the representative workflows pass their release checks.
 
 ## Source baseline
 
