@@ -17,13 +17,36 @@ cascade skipping, and cancellation. `Batches` is an `IBatchScheduler` from
 `Immediate.Jobs.Shared.Interfaces`; job and execution records are under
 `Immediate.Jobs.Shared.Apis`.
 
-The harness puts `CapturingJobStorage` behind the production generated
-schedulers. `harness.Captures.FindJob(handle)` returns a captured `JobRecord`;
-its typed identifier is `JobHandle`. Other snapshots cover continuations,
-batches, dynamic additions, recurring mutations, and materializations. `Clear()`
-clears the capture log without deleting durable in-memory state. Captures do not
-prove handler execution, so retain at least one drained harness test for critical
-jobs.
+`harness.Storage` is the `CapturingJobStorage` behind the production generated
+schedulers (the former `Captures` property was removed).
+`harness.Storage.FindJob(handle)` returns a captured `JobRecord`; its typed
+identifier is `JobHandle`. Other snapshots cover continuations, batches, dynamic
+additions, recurring mutations, and materializations (including any `Queue`
+overlap dependencies), in call order. `RecurringSchedules` is a dictionary of the
+saved schedules keyed by name. `Clear()` clears the capture log without deleting
+durable in-memory state. `LoadPersistedJobState` seeds jobs, batches, edges, and
+recurring schedules before a test. The class is unsealed with virtual storage
+methods, so a test can derive from it to inject failures or delays. Captures do
+not prove handler execution, so retain at least one drained harness test for
+critical jobs.
+
+Pass `Action<ImmediateJobsOptions>` as the last constructor argument to change
+worker options; the harness uses one worker by default. `ResetScheduler()`
+rebuilds `Services`, `Batches`, and `Scheduler` while keeping `Storage` and
+`TimeProvider`, simulating a restart:
+
+```csharp
+await harness.DrainAsync(token);
+harness.TimeProvider.Advance(TimeSpan.FromMinutes(17));
+harness.ResetScheduler();
+await harness.DrainAsync(token);
+Assert.Single(
+	harness.Storage.RecurringMaterializations,
+	m => m.Schedule.Name == "cleanup-sessions" && m.Job.State == JobState.Pending);
+```
+
+The first drain after a reset merges code-defined schedules again and applies
+each job's `MisfireHandlingMode` to occurrences missed while time advanced.
 
 Test at-least-once consequences deliberately: arrange a retryable failure,
 advance fake time through the retry, and assert that the application-side

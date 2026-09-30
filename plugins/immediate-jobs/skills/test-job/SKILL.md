@@ -13,9 +13,9 @@ Prove persisted and execution behavior without relying on real time or a live wo
 2. Identify whether the test needs full pipeline execution or only inspection of captured storage writes.
 3. Read [testing-patterns.md](references/testing-patterns.md).
 4. Configure `JobTestHarness` with the same generated handler/job registration and required dependencies as production, but do not call `ConfigureStorage`; the harness installs in-memory storage and fake time. Create an async service scope before resolving a generated scheduler because schedulers are scoped and the harness validates scopes.
-5. Use its fake time provider and drain methods for delayed, retry, timeout, and recurring behavior.
+5. Use its fake time provider and drain methods for delayed, retry, timeout, and recurring behavior. Call `ResetScheduler()` after advancing time to simulate a restart and test missed recurring runs and restored work. Pass worker options as the last constructor argument; the harness defaults to one worker.
 6. Assert the enqueued record before draining when schedule shape matters; query the durable record or graph after execution.
-7. Inspect `harness.Captures` when the subject only needs to request work. Use `FindJob`, `FindBatch`, or the ordered capture snapshots, and query durable state when cancellation or execution matters.
+7. Inspect `harness.Storage` (a `CapturingJobStorage`) when the subject only needs to request work. Use `FindJob`, `FindBatch`, or the ordered capture snapshots, and query durable state when cancellation or execution matters.
 8. Exercise idempotency or retry behavior explicitly for side-effecting jobs.
 9. Build and run the focused tests, then run the relevant project suite.
 
@@ -23,6 +23,7 @@ Prove persisted and execution behavior without relying on real time or a live wo
 
 - Do not use `Task.Delay`, wall-clock sleeps, or timing races when fake time can drive the runtime deterministically.
 - Do not substitute direct handler invocation when the behavior pipeline, serialization, restored context, or retry boundary is under test.
+- Do not use the removed `harness.Captures`; captures are on `harness.Storage`.
 - Do not mistake a captured storage write for proof that a worker can deserialize and execute it.
 - Do not combine incompatible versions of core, providers, and testing helpers.
 - Do not use this workflow to claim a custom `IJobStorage` is correct; use `$immediate-jobs:test-storage-provider` and its packaged conformance cases.

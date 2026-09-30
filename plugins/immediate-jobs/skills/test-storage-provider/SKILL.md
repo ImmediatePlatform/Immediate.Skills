@@ -15,13 +15,14 @@ can use any test framework or provider implementation.
 3. Read [conformance-suite.md](references/conformance-suite.md).
 4. Declare one exact `StorageCapabilities` set. Include `Queue`. Add `Recurring`, `Graph`, `FairQueues`, or `Replica` only when the resolved type implements the matching public interface.
 5. Build a fresh service provider per case. Register `Microsoft.Extensions.Time.Testing.FakeTimeProvider` as `TimeProvider` and resolve exactly one `IJobStorage`. Give each case a separate database, schema, key prefix, or similar data boundary.
-6. Create one visible parameterized test case for every object returned by `JobStorageConformanceSuite.GetCases`, then pass the service provider to `RunAsync`.
+6. Create one visible parameterized test case for every object returned by `JobStorageConformanceSuite.GetCases`. Store the case's `PersistedJobState` (jobs, batches, edges, and recurring schedules) in the isolated backend, then pass the service provider to `RunAsync`.
 7. Keep fixtures safe for parallel execution. When cleanup needs the connection and backend identifier, return a wrapper that owns them along with the service provider. Dispose services before deleting the isolated data.
 8. Keep provider-specific tests for schema upgrades, SQL or Redis details, connection ownership, and simulated backend failures.
 9. Run the catalog on every supported provider and runtime combination. Report each failing case name, the expected flags, and the interfaces found at runtime.
 
 ## Guardrails
 
+- Do not ignore `PersistedJobState`; cases that restore existing graphs or schedules fail without it.
 - Do not skip individual packaged cases or advertise fewer capabilities than the resolved storage implements.
 - Do not construct internal built-in storage types or use `InternalsVisibleTo`; test the public registration path.
 - Do not share backend data between cases or use wall-clock sleeps for lease, retention, heartbeat, or recurring behavior.

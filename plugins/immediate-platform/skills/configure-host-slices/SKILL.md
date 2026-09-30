@@ -23,7 +23,7 @@ Coordinate one tag model across package generators and prove each host receives 
 - Tags are additive filters, not strict deny lists. No tags registers everything; untagged items always register.
 - Matching is ordinal and case-sensitive, with any-tag semantics.
 - Use separate assemblies when strict exclusion cannot tolerate an accidentally untagged item.
-- Behaviors and job queue definitions have package-specific unfiltered behavior; document it.
+- Behaviors are not tag-filtered; job queues follow the selected jobs. Document both.
 
 ## Handoff
 

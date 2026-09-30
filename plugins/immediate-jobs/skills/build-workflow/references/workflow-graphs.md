@@ -66,8 +66,9 @@ Generated scheduling can add work beside current continuations, before them, or
 detached from the batch. Expansion is valid only during the active attempt and
 requires graph capability except for detached work.
 
-Read batch status, members, and graphs with scoped `JobMonitor` or its read-only
-`IJobMonitor` interface. Use the secured dashboard for operator-facing graph views.
+Read batch status, members, and graphs with the singleton `JobMonitor` or its
+read-only `IJobMonitor` interface. Graph edges are `JobContinuationEdge` records
+with `ChildJobHandle`, a parent job or batch handle, `Delay`, and `Trigger`. Use the secured dashboard for operator-facing graph views.
 
 ## Sources
 
