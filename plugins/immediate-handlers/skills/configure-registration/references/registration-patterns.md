@@ -3,7 +3,6 @@
 Register assembly-wide generated services:
 
 ```csharp
-services.AddApplicationBehaviors();
 services.AddApplicationHandlers();
 ```
 
@@ -21,9 +20,12 @@ services.AddApplicationHandlers(ServiceLifetime.Transient);
 that handler. Generated registrations include the concrete `X.Handler`, the
 matching `IHandler<,>` or `IStreamingHandler<,>`, `X.HandleBehavior`, and the
 container for sealed handlers. Behaviors are always `TryAddTransient`.
+Behavior service types are closed for each handler's request and response.
+All generated descriptors use `TryAdd`, so repeated registration is idempotent
+and an existing registration for the same service type wins.
 
 Register one handler in a focused test with `X.AddHandlers(services)`. This
-does not register its behaviors.
+also registers its concrete behavior dependencies.
 
 ## Tags
 
@@ -41,7 +43,8 @@ Rules:
 1. No tags registers every handler, including tagged handlers.
 2. Untagged handlers are always included in filtered calls.
 3. Matching uses ordinal, case-sensitive equality and any requested tag may match.
-4. `AddXxxBehaviors()` has no tag filter.
+4. Each selected handler registers its concrete behavior dependencies; a
+   behavior used only by an excluded handler is not registered.
 
 On C# 13+, generated tag parameters use `params ReadOnlySpan<string>`; older
 language versions use `params string[]`. Loose arguments and collection
