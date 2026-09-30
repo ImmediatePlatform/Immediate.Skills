@@ -1,0 +1,13 @@
+{
+  "name": "immediate-validations",
+  "version": "0.1.0",
+  "description": "Focused workflows for compile-time validation with Immediate.Validations.",
+  "author": {
+    "name": "ImmediatePlatform",
+    "url": "https://github.com/ImmediatePlatform"
+  },
+  "homepage": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "repository": "https://github.com/ImmediatePlatform/Immediate.Skills",
+  "license": "MIT",
+  "keywords": ["dotnet", "immediate-validations", "validation", "agent-skills"]
+}

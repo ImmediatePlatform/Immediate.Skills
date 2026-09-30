@@ -20,7 +20,7 @@ operations:
 
 ```csharp
 builder.Services.AddMyAppJobs(tags: ["worker"])
-	.ConfigureWorkers(options => options.MaxParallelJobs = 16)
+	.ConfigureWorkers(options => options.WorkerCount = 16)
 	.UseFairQueues(options => options.Configure(fair =>
 		fair.GroupRoundRobin = true))
 	.ConfigureStorage(storage => storage
@@ -51,10 +51,29 @@ own a connection created from configuration or use an application-owned
 `ConfigureRedis` accepts either a direct options callback or an
 `OptionsBuilder<RedisJobStorageOptions>` callback for `IConfiguration` binding.
 
-Map a readiness endpoint with a predicate for the tag passed to `AddHealthCheck`.
-Map `HealthStatus.Degraded` to HTTP 503 if readiness must stay closed until the
-scheduler starts. The health check and worker use the same validated options; no
-extra options registration is required.
+Worker options that matter for sizing:
+
+| Option | Default | Meaning |
+| --- | --- | --- |
+| `WorkerCount` | `Clamp(ProcessorCount * 4, 8, 32)` | Workers per node; the parallel job limit. |
+| `MaxAcquisitionCount` | same as `WorkerCount` | Running plus claimed-but-waiting jobs per node; raise it above `WorkerCount` to keep workers busy with a longer `PollingInterval`. Below `WorkerCount` it becomes the parallel limit. |
+| `PollingInterval` | 1 second | Delay between acquisition passes. |
+| `ServerTimeout` | 10 seconds | Heartbeat silence before a node is considered dead; heartbeats run every third. |
+| `LeaseDuration` | 1 minute | Claim lease; renewed every third by a separate loop. |
+
+`AddHealthCheck(name)` registers two checks with the same tags and failure
+status: `{name}-storage` for provider connectivity and `{name}-service` for a
+started worker with a heartbeat within `ServerTimeout`. Map a readiness endpoint
+with a predicate for the tag. The service check reports the failure status until
+the worker starts, and always reports healthy under `DisableWorkers()`. The
+checks and worker use the same validated options; no extra options registration
+is required. `DisableWorkers()` still initializes storage and merges code-defined
+recurring schedules.
+
+Schema changes in recent previews: the EF Core server table gained required
+`ExpiresAt` and `Details` columns (indexed by `ExpiresAt`), so add a migration
+after upgrading; LinqToDB now stores timestamps in date-and-time columns instead
+of 64-bit integers, so recreate schemas created by an earlier preview.
 
 Provider initialization is idempotent startup, not production migration. Keep
 provider and core packages on compatible versions. A custom provider starts

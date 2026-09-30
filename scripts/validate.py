@@ -11,6 +11,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MARKETPLACE_PATH = ROOT / ".agents" / "plugins" / "marketplace.json"
+CLAUDE_MARKETPLACE_PATH = ROOT / ".claude-plugin" / "marketplace.json"
+CLAUDE_MANIFEST_KEYS = (
+    "name",
+    "version",
+    "description",
+    "author",
+    "homepage",
+    "repository",
+    "license",
+    "keywords",
+)
 ACTIVATION_PATH = ROOT / "tests" / "activation-prompts.json"
 IMMEDIATE_DOCS = ROOT.parent / "Immediate.Dev" / "src" / "content" / "docs"
 SEMVER = re.compile(
@@ -173,6 +184,7 @@ def validate_plugin(plugin_dir: Path, errors: list[str]) -> str | None:
         errors.append(f"{location} version must use semantic versioning")
     if manifest.get("skills") != "./skills/":
         errors.append(f"{location} skills must be ./skills/")
+    validate_claude_plugin(plugin_dir, manifest, errors)
 
     skills_dir = plugin_dir / "skills"
     if not skills_dir.is_dir():
@@ -187,6 +199,76 @@ def validate_plugin(plugin_dir: Path, errors: list[str]) -> str | None:
         else:
             errors.append(f"{child.relative_to(ROOT)} must be inside a skill directory")
     return version
+
+
+def validate_claude_plugin(
+    plugin_dir: Path, codex_manifest: dict[str, object], errors: list[str]
+) -> None:
+    location = plugin_dir.relative_to(ROOT) / ".claude-plugin" / "plugin.json"
+    manifest = load_json(plugin_dir / ".claude-plugin" / "plugin.json", errors)
+    if manifest is None:
+        return
+
+    for key in CLAUDE_MANIFEST_KEYS:
+        if manifest.get(key) != codex_manifest.get(key):
+            errors.append(f"{location}.{key} must match .codex-plugin/plugin.json")
+    extra = sorted(set(manifest) - set(CLAUDE_MANIFEST_KEYS))
+    if extra:
+        errors.append(f"{location} has unsupported keys: {', '.join(extra)}")
+
+
+def validate_claude_marketplace(
+    codex_name: str | None,
+    installation_by_name: dict[str, str],
+    marketplace_names: list[str],
+    errors: list[str],
+) -> None:
+    marketplace = load_json(CLAUDE_MARKETPLACE_PATH, errors)
+    if marketplace is None:
+        return
+
+    location = ".claude-plugin/marketplace.json"
+    if marketplace.get("name") != codex_name:
+        errors.append(f"{location}.name must match the Codex marketplace name")
+    owner = marketplace.get("owner")
+    if not isinstance(owner, dict) or not isinstance(owner.get("name"), str):
+        errors.append(f"{location}.owner.name must be a non-empty string")
+
+    entries = marketplace.get("plugins")
+    if not isinstance(entries, list):
+        errors.append(f"{location}.plugins must be an array")
+        return
+
+    expected = [
+        name
+        for name in marketplace_names
+        if installation_by_name.get(name) in {"AVAILABLE", "INSTALLED_BY_DEFAULT"}
+    ]
+    names: list[str] = []
+    for index, entry in enumerate(entries):
+        entry_location = f"{location}.plugins[{index}]"
+        if not isinstance(entry, dict):
+            errors.append(f"{entry_location} must be an object")
+            continue
+        name = require_string(entry, "name", entry_location, errors)
+        if name is None:
+            continue
+        names.append(name)
+        if entry.get("source") != f"./plugins/{name}":
+            errors.append(f"{entry_location}.source must be ./plugins/{name}")
+        codex_manifest_path = ROOT / "plugins" / name / ".codex-plugin" / "plugin.json"
+        if codex_manifest_path.is_file():
+            codex_manifest = json.loads(codex_manifest_path.read_text(encoding="utf-8"))
+            if entry.get("description") != codex_manifest.get("description"):
+                errors.append(f"{entry_location}.description must match the plugin manifest")
+        if "version" in entry:
+            errors.append(f"{entry_location}.version must be omitted; plugin.json owns it")
+
+    if names != expected:
+        errors.append(
+            f"{location} must list the installable Codex plugins in the same order: "
+            f"{', '.join(expected)}"
+        )
 
 
 def validate_activation_prompts(identities: set[str], errors: list[str]) -> None:
@@ -305,6 +387,13 @@ def main() -> int:
             for skill_file in (plugin_dir / "skills").glob("*/SKILL.md")
         }
         validate_activation_prompts(identities, errors)
+
+    validate_claude_marketplace(
+        marketplace.get("name") if marketplace is not None else None,
+        installation_by_name,
+        marketplace_names,
+        errors,
+    )
 
     if errors:
         print("Validation failed:")

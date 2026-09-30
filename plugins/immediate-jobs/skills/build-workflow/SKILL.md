@@ -12,7 +12,7 @@ Persist dependency graphs atomically and make their failure and expansion behavi
 1. Verify compatible core and provider package versions and confirm `IJobGraphStorage` capability. Stop if the target uses Redis.
 2. Model the graph, continuation triggers, post-release delays, idempotency keys, and expected cascade behavior before writing scheduling code. Decide which jobs must share the atomic batch write and which may be attached later as a separate durable continuation.
 3. Read [workflow-graphs.md](references/workflow-graphs.md).
-4. Import `Immediate.Jobs.Shared.Interfaces` and resolve scoped `IBatchScheduler` plus each generated job scheduler.
+4. Import `Immediate.Jobs.Shared.Interfaces` and resolve the singleton `IBatchScheduler` plus each scoped generated job scheduler.
 5. Begin and asynchronously dispose a batch. Add roots with synchronous `Enqueue` or `Schedule`, add dependencies with synchronous `ScheduleAfter`, then commit once. Prefer `RunAsync` when its commit-on-success shape fits.
 6. Use one `BatchJobHandle` for a chain, several children for fan-out, and an `IReadOnlyList<BatchJobHandle>` for fan-in inside the open batch. Use `ScheduleAfterAsync` with durable `JobHandle` and `BatchHandle` parents outside it.
 7. Select `Success`, `Failure`, or `Complete` explicitly. A continuation delay begins only after every parent reaches the required outcome.

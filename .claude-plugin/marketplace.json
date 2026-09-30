@@ -1,0 +1,54 @@
+{
+  "name": "immediate",
+  "owner": {
+    "name": "ImmediatePlatform",
+    "url": "https://github.com/ImmediatePlatform"
+  },
+  "metadata": {
+    "description": "Team-maintained agent skills for building applications with the Immediate.Platform libraries."
+  },
+  "plugins": [
+    {
+      "name": "immediate-platform",
+      "source": "./plugins/immediate-platform",
+      "description": "Team workflows for building applications with the Immediate.Platform libraries.",
+      "category": "development"
+    },
+    {
+      "name": "immediate-handlers",
+      "source": "./plugins/immediate-handlers",
+      "description": "Focused workflows for building applications with Immediate.Handlers.",
+      "category": "development"
+    },
+    {
+      "name": "immediate-apis",
+      "source": "./plugins/immediate-apis",
+      "description": "Focused workflows for exposing Immediate.Handlers through Immediate.Apis.",
+      "category": "development"
+    },
+    {
+      "name": "immediate-validations",
+      "source": "./plugins/immediate-validations",
+      "description": "Focused workflows for compile-time validation with Immediate.Validations.",
+      "category": "development"
+    },
+    {
+      "name": "immediate-cache",
+      "source": "./plugins/immediate-cache",
+      "description": "Focused workflows for generated handler caching with Immediate.Cache.",
+      "category": "development"
+    },
+    {
+      "name": "immediate-injections",
+      "source": "./plugins/immediate-injections",
+      "description": "Focused workflows for source-generated dependency injection with Immediate.Injections.",
+      "category": "development"
+    },
+    {
+      "name": "immediate-jobs",
+      "source": "./plugins/immediate-jobs",
+      "description": "Focused workflows for building and operating background jobs with Immediate.Jobs.",
+      "category": "development"
+    }
+  ]
+}

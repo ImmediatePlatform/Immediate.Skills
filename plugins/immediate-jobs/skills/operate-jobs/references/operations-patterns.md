@@ -31,9 +31,17 @@ replace the recorded cancellation.
 
 Export the `Immediate.Jobs` activity source and meter. Execution traces link back
 to the enqueue trace. Metrics cover enqueue, success, failure, retry, duration,
-local queue depth, and active workers. The gauges cover only the current process,
-so use provider snapshots for complete cluster totals. Worker logging scopes
-include `JobName`, `QueueName`, `JobHandle`, and `Attempt`.
+`acquisition.count` (running plus claimed-but-waiting jobs on the node, capped by
+`MaxAcquisitionCount`), and `workers.active`. The gauges cover only the current
+process, so use provider snapshots for complete cluster totals. Worker logging
+scopes include `JobName`, `QueueName`, `JobHandle`, and `Attempt`.
+
+Every log event has a stable ID and a package-prefixed event name, such as
+`Immediate.Jobs.Shared.LeaseRenewalFailed`,
+`Immediate.Jobs.Shared.RecurringMaterializationFailed`, or
+`Immediate.Jobs.Shared.RecurringOccurrencesMissed`. IDs start at 11000 for the
+core runtime, 11500 for EF Core, 11600 for LinqToDB, and 11700 for Redis.
+Storage calls log at `Debug`; enable it only while diagnosing.
 
 Each acquired attempt retains its outcome, worker, timing, trace/span IDs, and
 failure text until its job or batch is removed. A telemetry-link callback receives
@@ -46,15 +54,26 @@ Dashboard JSON uses `jobHandle` and `batchHandle` string fields. Its item routes
 use `{jobHandle}` and `{batchHandle}` parameters. Convert boundary strings with
 `JobHandle.FromString` or `BatchHandle.FromString` before calling monitor APIs.
 
-Chain `AddHealthCheck` from generated job registration. It combines scheduler
-liveness and provider connectivity. Map a tag-filtered readiness endpoint and
-return HTTP 503 for `Degraded` if the scheduler must be running before the app is
-ready. It uses the same validated options as the worker and needs no separate
-options registration.
+Chain `AddHealthCheck(name)` from generated job registration. It registers
+`{name}-storage` (provider connectivity, with capability data) and
+`{name}-service` (worker started and heartbeat within `ServerTimeout`, 10 seconds
+by default); both share the tags and failure status. The service check reports
+the failure status until the worker starts and always reports healthy under
+`DisableWorkers()`. Map a tag-filtered readiness endpoint. The checks use the same
+validated options as the worker and need no separate options registration.
 
-Use scoped `JobMonitor` from `Immediate.Jobs.Shared.Apis` for reads and management
-commands. Its read-only `IJobMonitor` interface lives in
-`Immediate.Jobs.Shared.Interfaces` and resolves to the same scoped instance.
+Monitoring snapshots list only nodes whose heartbeat is within their own
+`ServerTimeout`. Each `JobServerSnapshot` includes `Workers` (zero-based worker ID,
+current `JobHandle`, attempt, and start time), plus `Acquisition` and
+`LeaseRenewal` loop snapshots with last success/failure times and
+`ConsecutiveFailures`. The dashboard Servers view shows each worker as a slot
+linked to its running job and lists busy workers.
+
+Use the singleton `JobMonitor` from `Immediate.Jobs.Shared.Apis` for reads and
+management commands. Its read-only `IJobMonitor` interface lives in
+`Immediate.Jobs.Shared.Interfaces` and resolves to the same singleton instance.
+Graph edges from `GetBatchGraphAsync` and `JobStatus.DependsOn` are
+`JobContinuationEdge` records.
 Apply authorization and paging to custom endpoints. Low-level execution history is available through
 `IJobStorage.QueryJobExecutionsAsync` in `Immediate.Jobs.Shared.Storage`.
 

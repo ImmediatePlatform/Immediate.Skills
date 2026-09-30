@@ -32,8 +32,10 @@ Its typed identifiers are `JobHandle` and optional `BatchHandle`. Read their
 `Value` only when an idempotency store or another boundary requires a string.
 
 Default policies are three attempts, no timeout, unlimited job-level
-concurrency, exponential jittered backoff with a five-second base, and overlap
-skip. Select overrides from application requirements rather than copying them.
+concurrency, exponential jittered backoff with a five-second base, overlap skip,
+and `MisfireHandlingMode.EnqueueOne` for recurring jobs. Queue concurrency, job
+concurrency, and the node-wide `WorkerCount` and `MaxAcquisitionCount` all apply.
+Select overrides from application requirements rather than copying them.
 
 Register the generated pieces independently:
 

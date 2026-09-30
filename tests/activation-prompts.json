@@ -190,10 +190,10 @@
   },
   "immediate-jobs:create-recurring-job": {
     "direct": "Use $immediate-jobs:create-recurring-job for a payloadless nightly cleanup.",
-    "indirect": "Reconcile a Cron schedule in an IANA time zone with explicit overlap behavior.",
+    "indirect": "Merge a Cron schedule in an IANA time zone at startup with explicit overlap and missed-run behavior.",
     "incomplete": "Make this job recurring.",
     "negative": "Enqueue a one-off delayed job.",
-    "edge": "Trigger a tag-filtered payloadless job by stable job name while keeping dynamic schedule names distinct."
+    "edge": "Drop occurrences missed during downtime, but queue overlapping runs of a recurrence-rule schedule by chaining them."
   },
   "immediate-jobs:build-workflow": {
     "direct": "Use $immediate-jobs:build-workflow for import fan-out and fan-in.",

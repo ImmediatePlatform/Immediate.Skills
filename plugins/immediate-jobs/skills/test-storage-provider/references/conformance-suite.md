@@ -6,7 +6,7 @@ capability flags are under `Immediate.Jobs.Shared.Storage`.
 | Implemented interface | Capability flag | Behavior tested |
 | --- | --- | --- |
 | `IJobStorage` | `Queue` | Lifecycle, enqueue/acquire, leases, executions, queries, monitoring, mutations, retention, health, and disposal |
-| `IRecurringJobStorage` | `Recurring` | Schedule lifecycle, reconciliation, due scanning, deduplication, materialization, and cleanup |
+| `IRecurringJobStorage` | `Recurring` | Schedule lifecycle, `MergeRecurringSchedulesListAsync` startup merge, due scanning, deduplication, materialization with overlap dependencies, and cleanup |
 | `IJobGraphStorage` | `Graph` | Atomic batches, edges, triggers, delayed release, fan-in, expansion, cancellation, deletion, and purge |
 | `IFairQueueStorage` | `FairQueues` | Group rotation, noisy-neighbor ordering, ordinary-order fallback, and concurrent claims |
 | `IJobStorageReplica` | `Replica` | Exact-handle acquisition, stale-worker protection, execution history, and restored records |
@@ -32,9 +32,25 @@ public static TheoryData<JobStorageConformanceTestCase> Cases =>
 public async Task StorageConforms(JobStorageConformanceTestCase testCase)
 {
 	await using var fixture = await AcmeStorageFixture.CreateAsync();
+	await fixture.SeedAsync(testCase.PersistedJobState);
 	await testCase.RunAsync(fixture.Services);
 }
 ```
+
+`PersistedJobState` lists the `Jobs`, `Batches`, `Edges`, and
+`RecurringSchedules` a case expects to exist before it runs, such as an existing
+batch graph to restore. Most cases have empty lists. The built-in providers
+expose `LoadPersistedJobState` for this; a custom fixture can insert rows
+directly.
+
+Provider contracts to honor beyond the older surface:
+`QueryNonCompletedJobsAsync(jobName)` returns every non-final job with that name
+(used by overlap policies); `MergeRecurringSchedulesListAsync` receives the full
+code-defined list once per start and must add, preserve unchanged, recalculate
+changed (keeping `LastRunAt` and paused state), promote matching dynamic
+schedules, and remove missing code schedules in one operation; and
+`MaterializeRecurringAsync` must save its optional `dependencies` edges with the
+new `AwaitingContinuation` run.
 
 Give every case separate backend data by using a new database, schema, key prefix,
 or similar boundary. `FakeTimeProvider` is in `Microsoft.Extensions.Time.Testing`
